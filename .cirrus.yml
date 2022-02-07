@@ -1,0 +1,18 @@
+env: 
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: "/tmp/ci" 
+    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    rclone_config: " "
+
+task:
+    name: aosp 
+    timeout_in: 260m 
+    container:
+      image: aarunalr/aosp-build 
+      cpu: 8 
+      memory: 32G 
+    sync_script: 
+      - bash sync 
+    build_script: 
+      - bash build 
