@@ -3,8 +3,6 @@ env:
     CIRRUS_WORKING_DIR: "/tmp/ci" 
     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-    rclone_config: " "
-
 task:
     name: aosp 
     timeout_in: 260m 
