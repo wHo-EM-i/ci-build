@@ -7,3 +7,6 @@ echo "|| Uploading CCACHE ||"
 git add -f -A .
 git commit -sm "CCACHE: IMPORT CCACHE FROM NEW BUILD"
 git push -f
+
+# clean storage
+rm -rf /tmp/*
