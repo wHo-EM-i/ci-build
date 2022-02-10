@@ -1,7 +1,7 @@
 env:
     CIRRUS_CLONE_DEPTH: 1
     CIRRUS_WORKING_DIR: "/tmp/ci"
-    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    gh_token: "ENCRYPTED[d33aa6d3c484d512e2e653158899c442820ed2d1991157f423e67959292d0297a1f24eae79e5d0e807d67d0fdc31c496]"
 
 task:
     name: aosp
