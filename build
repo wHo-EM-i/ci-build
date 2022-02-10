@@ -42,10 +42,13 @@ tg(){
 
 id=1332752551
 
-# Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
+# compile plox
+make bacon -j10 &
+sleep 90m
+kill %1
 
-make bacon -j10 \
-	&& send_zip=$(up out/target/product/lavender/*zip) && tg $id "Build Succeed!
+# Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
+send_zip=$(up out/target/product/lavender/*zip) && tg $id "Build Succeed!
 $send_zip" \
 	|| tmate -S /tmp/tmate.sock new-session -d && tmate -S /tmp/tmate.sock wait tmate-ready && send_shell=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}') && tg $id "Build Failed" && tg $id "$send_shell" && ccache -s && sleep 2h
 ccache -s # Let's print ccache statistics finally
