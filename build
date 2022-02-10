@@ -12,6 +12,9 @@ ccache -M 15G
 ccache -o compression=true
 ccache -z
 
-make bacon -j$(nproc --all)
+# compile plox
+make bacon -j$(nproc --all) &
+sleep 90m
+kill %1
 
 ccache -s # Let's print ccache statistics finally
