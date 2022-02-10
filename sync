@@ -10,7 +10,7 @@ git config --global user.email "prashant33968@gmail.com"
 repo init -q --no-repo-verify --depth=1 -u https://github.com/PixelExtended/manifest -b snow -g default,-mips,-darwin,-notdefault
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8  | tee sync.log
 
 # Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
 git clone https://github.com/ImPrashantt/device_xiaomi_lavender -b test device/xiaomi/lavender
