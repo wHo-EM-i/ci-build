@@ -13,7 +13,7 @@ repo init -q --no-repo-verify --depth=1 -u https://github.com/PixelExtended/mani
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
 
 # Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
-git clone https://github.com/ImPrashantt/device_xiaomi_lavender -b test device/xiaomi/lavender
-git clone https://github.com/ImPrashantt/vendor_xiaomi_lavender -b test vendor/xiaomi/lavender
-git clone https://github.com/stormbreaker-project/kernel_xiaomi_lavender -b qti-oldcam-eas kernel/xiaomi/lavender
+git clone --depth=1 https://github.com/ImPrashantt/device_xiaomi_lavender -b test device/xiaomi/lavender
+git clone --depth=1 https://github.com/ImPrashantt/vendor_xiaomi_lavender -b test vendor/xiaomi/lavender
+git clone --depth=1 https://github.com/stormbreaker-project/kernel_xiaomi_lavender -b qti-oldcam-eas kernel/xiaomi/lavender
 git clone -b master --depth=1 https://github.com/kdrag0n/proton-clang.git prebuilts/clang/host/linux-x86/clang-proton
