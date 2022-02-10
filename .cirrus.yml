@@ -1,16 +1,22 @@
-env: 
+env:
     CIRRUS_CLONE_DEPTH: 1
-    CIRRUS_WORKING_DIR: "/tmp/ci" 
+    CIRRUS_WORKING_DIR: "/tmp/ci"
     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
 task:
-    name: aosp 
-    timeout_in: 260m 
+    name: aosp
+    timeout_in: 260m
     container:
-      image: aarunalr/aosp-build 
-      cpu: 8 
-      memory: 32G 
-    sync_script: 
-      - bash sync 
-    build_script: 
-      - bash build 
+      image: aarunalr/aosp-build
+      cpu: 8
+      memory: 32G
+    download_ccache_background_script: # To download ccache in background
+      - bash download_ccache # Ccache download script
+    sync_script:
+      - bash sync
+    monitor_background_script: # To monitor ccache and machine status every minute, runs in background
+      - bash monitor # Monitor script
+    build_script:
+      - bash build
+    upload_ccache_script: # Upload ccache to cloud foreground
+      - bash upload_ccache # Ccache uploading script
