@@ -12,7 +12,7 @@ up () {
 	# 14 days, 10 GB limit
 }
 
-echo "|| Downloading CCACHE ||"
+echo "|| Uploading CCACHE ||"
 time com ccache 1 # Compression level 1, its enough
 time up ccache.tar.gz
 
