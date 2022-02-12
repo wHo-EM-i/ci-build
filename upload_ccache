@@ -2,19 +2,22 @@
 
 cd /tmp
 
-# Compress function with pigz for faster compression
-com () {
-    tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
-}
-
 up () {
-	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+  if [ -e $1 ]; then
+  echo "uploading $1"
+	curl --upload-file $1 https://temp.sh/$(basename $1); echo
 	# 14 days, 10 GB limit
+  fi
 }
 
+echo "|| Compressing CCACHE ||"
+time 7za a -tzip -v3g ccache_backup.zip /tmp/ccache/* -sdel
+
+# upload all parts
 echo "|| Uploading CCACHE ||"
-time com ccache 1 # Compression level 1, its enough
-time up ccache.tar.gz
+for i in /tmp/ccache_backup.zip.*; do
+     time up ${i}
+done
 
 # clean storage
 rm -rf /tmp/*
