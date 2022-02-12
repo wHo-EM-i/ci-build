@@ -11,12 +11,12 @@ up () {
 }
 
 echo "|| Compressing CCACHE ||"
-7za a -tzip -v2048m -mx=1 ccache_backup.zip /tmp/ccache/*
+7za a -tzip -v2048m -mx=1 ccache_backup.zip ccache/*
 
 # upload all parts
 echo "|| Uploading CCACHE ||"
 for i in /tmp/ccache_backup.zip.*; do
-   up ${i}
+   time up ${i}
 done
 
 # clean storage
