@@ -6,7 +6,7 @@ up () {
   if [ -e $1 ]; then
   echo "uploading $1"
 	curl --upload-file $1 https://temp.sh/$(basename $1); echo
-	# 14 days, 10 GB limit
+	# 3 days, 4 GB limit
   fi
 }
 
@@ -19,5 +19,8 @@ for i in /tmp/ccache_backup.zip.*; do
    time up ${i}
 done
 
+sleep 5
+echo "|| Uploaded ||"
+"
 # clean storage
 rm -rf /tmp/*

@@ -11,15 +11,15 @@ apt install wget
 cd /tmp # Where to download cccahe
 
 echo "|| Downloading CCACHE ||" # will remove it after getting ccache backup from transfer.sh & use newlink
-#git clone --depth=1 https://who-em-i:$gh_token@github.com/ImPrashantt/ccache_backup.git ccache
-time wget https://temp.sh/PcCPy/ccache_backup.zip.001
-time wget https://temp.sh/mOXgR/ccache_backup.zip.002
+git clone --depth=1 https://who-em-i:$gh_token@github.com/ImPrashantt/ccache_backup.git ccache
+#time wget https://temp.sh/PcCPy/ccache_backup.zip.001
+#time wget https://temp.sh/mOXgR/ccache_backup.zip.002
 
 # url=https://xxx.xxx/ccache.tar.gz
 # time aria2c $url -x16 -s50 # Using aria2c for speed haha, ccache will be at /tmp/ccache.tar.gz since my file name is ccache.tar.gz
 # time tar xf ccache.tar.gz  # Extract ccache so ci can use it
 # rm -rf ccache.tar.gz # Remove unnecessary downloaded file, it will speed up the upload ccache process
 
-echo "|| Extracting CCACHE ||"
-time 7za x ccache_backup.zip.001 -occache
-rm -rf ccache_backup.zip.*
+#echo "|| Extracting CCACHE ||"
+#time 7za x ccache_backup.zip.001 -occache
+#rm -rf ccache_backup.zip.*
