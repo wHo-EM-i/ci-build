@@ -5,7 +5,7 @@ cd /tmp
 up () {
   if [ -e $1 ]; then
   echo "uploading $1"
-	curl --upload-file $1 https://temp.sh/$(basename $1); echo
+	curl -4 --retry 18 --raw --upload-file $1 https://temp.sh/$(basename $1); echo
 	# 3 days, 4 GB limit
   fi
 }
