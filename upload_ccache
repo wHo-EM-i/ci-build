@@ -10,8 +10,19 @@ up () {
   fi
 }
 
+# Compress function with pigz for faster compression
+com ()
+{
+    tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
+}
+
 echo "|| Compressing CCACHE ||"
-7za a -tzip -v2048m -mx=1 ccache_backup.zip ccache/*
+
+# First compress in with pogz in a single zip.
+time com ccache 1 # Compression level 1, its enough
+
+# Now split in 2GB parts
+7za a -tzip -v2048m -mx=1 ccache_backup.zip ccache.tar.gz
 
 # upload all parts
 echo "|| Uploading CCACHE ||"
@@ -21,6 +32,6 @@ done
 
 sleep 5
 echo "|| Uploaded ||"
-"
+
 # clean storage
 rm -rf /tmp/*
