@@ -24,7 +24,7 @@ ccache -z
 
 # upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
 up(){
-	curl --upload-file $1 https://temp.sh/$(basename $1); echo
+	curl --upload-file $1 http://oshi.at/$(basename $1); echo
 	# 3 days, 4 GB limit
 }
 
