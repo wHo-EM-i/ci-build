@@ -24,8 +24,8 @@ ccache -z
 
 # upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
 up(){
-	curl --upload-file $1 http://oshi.at/$(basename $1); echo
-	# 3 days, 4 GB limit
+	curl --upload-file $1 http://oshi.at/nossl
+	# 3 days, 5 GB limit
 }
 
 # It's recommended to use google drive(rclone) as upload solution for coping with the time limit. Un-comment next 3 lines to upload with rclone in drive. Also change apon and junk according to your config name, uploading folder of drive

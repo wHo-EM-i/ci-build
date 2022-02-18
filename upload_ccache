@@ -5,8 +5,8 @@ cd /tmp
 up () {
   if [ -e $1 ]; then
   echo "uploading $1"
-	curl -4 --retry 18 --upload-file $1 http://oshi.at/$(basename $1); echo
-	# 3 days, 4 GB limit
+	curl -4 --retry 18 --upload-file $1 http://oshi.at/nossl
+	# 3 days, 5 GB limit
   fi
 }
 
@@ -21,8 +21,8 @@ echo "|| Compressing CCACHE ||"
 # First compress in with pogz in a single zip.
 time com ccache 1 # Compression level 1, its enough
 
-# Now split in 2GB parts
-7za a -tzip -v2048m -mx=1 ccache_backup.zip ccache.tar.gz
+# Now split in 1.5GB parts
+7za a -tzip -v1536m -mx=1 ccache_backup.zip ccache.tar.gz
 
 # upload all parts
 echo "|| Uploading CCACHE ||"
