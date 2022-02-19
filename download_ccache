@@ -8,12 +8,25 @@ apt install wget pigz
 cd /tmp # Where to download cccahe
 
 echo "|| Downloading CCACHE ||" # will remove it after getting ccache backup from transfer.sh & use newlink
-git clone --depth=1 https://who-em-i:$gh_token@github.com/ImPrashantt/ccache_backup.git ccache
-# time wget -t 0 --no-check-certificate -4 https://temp.sh/PcCPy/ccache_backup.zip.001
-# time wget -t 0 --no-check-certificate -4 https://temp.sh/mOXgR/ccache_backup.zip.002
+#git clone --depth=1 https://who-em-i:$gh_token@github.com/ImPrashantt/ccache_backup.git ccache
+time curl -L https://free.keep.sh/xhazUz0xtKHennEo/ccache_backup.zip.001 > ccache_backup.zip.001
+time curl -L https://free.keep.sh/7yQ7Yo3shWBPaVKR/ccache_backup.zip.002 > ccache_backup.zip.002
+time curl -L https://free.keep.sh/3E1gQDBrIwixl3q7/ccache_backup.zip.003 > ccache_backup.zip.003 
+time curl -L https://free.keep.sh/Ui4ghWTKuhrzquWP/ccache_backup.zip.004 > ccache_backup.zip.004
+time curl -L https://free.keep.sh/wCRWGERG8QZBgdbq/ccache_backup.zip.005 > ccache_backup.zip.005
+time curl -L https://free.keep.sh/qbclQkJHAKaWXIgX/ccache_backup.zip.006 > ccache_backup.zip.006
+time curl -L https://free.keep.sh/gHhzcCeNYhyliMp2/ccache_backup.zip.007 > ccache_backup.zip.007
+time curl -L https://free.keep.sh/r2UY5x3HuA5PYyr1/ccache_backup.zip.008 > ccache_backup.zip.008
+time curl -L https://free.keep.sh/XwwwB1pR78LcsNbW/ccache_backup.zip.009 > ccache_backup.zip.009
+time curl -L https://free.keep.sh/hamhVpb7no9woeMJ/ccache_backup.zip.010 > ccache_backup.zip.010
+time curl -L https://free.keep.sh/gWpESfbIaq107tEc/ccache_backup.zip.011 > ccache_backup.zip.011
+time curl -L https://free.keep.sh/5XXMeI7RuhE2BTZ3/ccache_backup.zip.012 > ccache_backup.zip.012
+time curl -L https://free.keep.sh/zK4v3e6tXUpXhI7h/ccache_backup.zip.013 > ccache_backup.zip.013
+time curl -L https://free.keep.sh/4vJRQuuo1R3nyodA/ccache_backup.zip.014 > ccache_backup.zip.014
+time curl -L https://free.keep.sh/i6lNWJo2uTEQumIA/ccache_backup.zip.015 > ccache_backup.zip.015
 
-# echo "|| Extracting CCACHE ||"
-# 7za x ccache_backup.zip.001
-# time tar xf ccache.tar.gz  # Extract ccache so ci can use it
-# rm -rf ccache.tar.gz # Remove unnecessary downloaded file, it will speed up the upload ccache process
-# rm -rf ccache_backup.zip.*
+echo "|| Extracting CCACHE ||"
+7za x ccache_backup.zip.001
+time tar xf ccache.tar.gz  # Extract ccache so ci can use it
+rm -rf ccache.tar.gz # Remove unnecessary downloaded file, it will speed up the upload ccache process
+rm -rf ccache_backup.zip.*

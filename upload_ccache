@@ -34,4 +34,4 @@ sleep 5
 echo "|| Uploaded ||"
 
 # clean storage
-rm -rf /tmp/*
+rm -rf /tmp/rom
