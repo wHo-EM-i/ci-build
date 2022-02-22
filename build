@@ -3,7 +3,7 @@ cd /tmp/rom
 
 # Normal build steps
 . build/envsetup.sh
-lunch aosp_lavender-userdebug
+lunch nad_lavender-userdebug
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
@@ -43,14 +43,14 @@ tg(){
 id=-1001659048493
 
 # compile plox
-make bacon -j10 &
-sleep 80m
+make nad -j10 &
+sleep 85m
 kill %1
 
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ -e out/target/product/lavender/PixelExtended_*.zip ]; then
-send_zip=$(up out/target/product/lavender/PixelExtended_*.zip) && tg $id "Build Succeed!
+if [ -e out/target/product/lavender/Nusantara*.zip ]; then
+send_zip=$(up out/target/product/lavender/Nusantara*.zip) && tg $id "Build Succeed!
 $send_zip"
 fi
 ccache -s # Let's print ccache statistics finally
