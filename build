@@ -7,7 +7,7 @@ lunch bliss_lavender-user
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
-export SELINUX_IGNORE_NEVERALLOWS=true
+#export SELINUX_IGNORE_NEVERALLOWS=true
 ccache -M 20G
 ccache -o compression=true
 ccache -z
@@ -25,7 +25,7 @@ ccache -z
 
 # upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
 up(){
-	curl --upload-file $1 http://oshi.at/nossl
+	curl --upload-file $1 http://temp.sh
 	# 3 days, 5 GB limit
 }
 
@@ -44,6 +44,7 @@ tg(){
 id=-1001659048493
 
 # compile plox
+make sepolicy -j8
 blissify -v lavender &
 sleep 85m
 kill %1
