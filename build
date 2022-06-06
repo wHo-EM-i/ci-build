@@ -45,9 +45,9 @@ id=-1001659048493
 
 # compile plox
 make sepolicy -j8
-blissify -v lavender &
-sleep 85m
-kill %1
+#blissify -v lavender &
+#sleep 85m
+#kill %1
 
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
