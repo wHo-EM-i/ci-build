@@ -35,7 +35,7 @@ up(){
 #}
 
 tg(){
-	bot_api=1806738803:1713012266:AAHEMmHMyZ-dxqMU4hQvEv_FHFJBP3UbDro
+	bot_api=1713012266:AAHEMmHMyZ-dxqMU4hQvEv_FHFJBP3UbDro
 	your_telegram_id=$1
 	msg=$2
 	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$msg&chat_id=${your_telegram_id}"
