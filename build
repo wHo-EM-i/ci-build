@@ -44,7 +44,7 @@ tg(){
 id=-1001659048493
 
 # compile plox
-make systemimage -j8
+make systemimage -j$(nproc --all)
 #blissify -v lavender &
 #sleep 85m
 #kill %1
