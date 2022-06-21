@@ -44,7 +44,7 @@ tg(){
 id=-1001659048493
 
 # compile plox
-make bootimage -j8
+make systemimage -j8
 #blissify -v lavender &
 #sleep 85m
 #kill %1
@@ -61,7 +61,7 @@ time com out/target/product/lavender/vendor.img 4
 send_zip=$(up out/target/product/lavender/vendor.img.tar.gz) && tg $id "Build Succeed!
 $send_zip"
 elif [ -e out/target/product/lavender/system.img ]; then
-time com out/target/product/lavender/system.img 4
+time com out/target/product/lavender/system.img 6
 send_zip=$(up out/target/product/lavender/system.img.tar.gz) && tg $id "Build Succeed!
 $send_zip"
 elif [ -e out/target/product/lavender/boot.img ]; then
