@@ -1,0 +1,15 @@
+--- 
+clone: 
+  depth: 1
+kind: pipeline
+name : aosp
+version: 69
+steps:
+ - name: compiler
+   image: aarunalr/aosp-build
+   commands:
+     - bash download_ccache
+     - bash sync
+     - bash build
+     - bash upload_ccache
+     
