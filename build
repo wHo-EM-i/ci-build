@@ -49,10 +49,24 @@ make vendorimage -j8
 #sleep 85m
 #kill %1
 
+# Compress function with pigz for faster compression
+com ()
+{
+    tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
+}
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 if [ -e out/target/product/lavender/vendor.img ]; then
-send_zip=$(up out/target/product/lavender/vendor.img) && tg $id "Build Succeed!
+time com out/target/product/lavender/vendor.img 4
+send_zip=$(up out/target/product/lavender/vendor.img.tar.gz) && tg $id "Build Succeed!
+$send_zip"
+elif [ -e out/target/product/lavender/system.img ]; then
+time com out/target/product/lavender/system.img 4
+send_zip=$(up out/target/product/lavender/system.img.tar.gz) && tg $id "Build Succeed!
+$send_zip"
+elif [ -e out/target/product/lavender/boot.img ]; then
+time com out/target/product/lavender/boot.img 4
+send_zip=$(up out/target/product/lavender/boot.img.tar.gz) && tg $id "Build Succeed!
 $send_zip"
 fi
 #ccache -s # Let's print ccache statistics finally
