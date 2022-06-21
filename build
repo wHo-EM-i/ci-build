@@ -44,15 +44,15 @@ tg(){
 id=-1001659048493
 
 # compile plox
-make sepolicy -j8
+make vendorimage -j8
 #blissify -v lavender &
 #sleep 85m
 #kill %1
 
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ -e out/target/product/lavender/Arrow*.zip ]; then
-send_zip=$(up out/target/product/lavender/Arrow*.zip) && tg $id "Build Succeed!
+if [ -e out/target/product/lavender/vendor.img ]; then
+send_zip=$(up out/target/product/lavender/vendor.img) && tg $id "Build Succeed!
 $send_zip"
 fi
-ccache -s # Let's print ccache statistics finally
+#ccache -s # Let's print ccache statistics finally

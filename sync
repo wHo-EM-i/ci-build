@@ -11,7 +11,7 @@ git config --global user.email "prashant33968@gmail.com"
 repo init --depth=1 --no-repo-verify -u https://github.com/ArrowOS/android_manifest -b arrow-12.1 -g default,-mips,-darwin,-notdefault
 
 # Local manifest
-git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b arrow-4.19 .repo/local_manifests
+git clone https://github.com/ImPrashantt/local_manifest.git --depth 1 -b arrow .repo/local_manifests
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
