@@ -44,7 +44,7 @@ tg(){
 id=-1001659048493
 
 # compile plox
-make vendorimage -j8
+make bootimage -j8
 #blissify -v lavender &
 #sleep 85m
 #kill %1
