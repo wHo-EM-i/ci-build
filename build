@@ -4,13 +4,15 @@ cd /tmp/rom
 # Normal build steps
 . build/envsetup.sh
 lunch nad_lavender-userdebug
-#export CCACHE_DIR=/tmp/ccache
-#export CCACHE_EXEC=$(which ccache)
-#export USE_CCACHE=1
 export SELINUX_IGNORE_NEVERALLOWS=true
-#ccache -M 20G
-#ccache -o compression=true
-#ccache -z
+if [ $1 == system ]; then
+export CCACHE_DIR=/tmp/ccache
+export CCACHE_EXEC=$(which ccache)
+export USE_CCACHE=1
+ccache -M 20G
+ccache -o compression=true
+ccache -z
+fi
 
 # Next 8 lines should be run first to collect ccache and then upload, after doning it 1 or 2 times, our ccache will help to build without these 8 lines.
 #make api-stubs-docs || echo no problem, we need ccache
@@ -25,8 +27,8 @@ export SELINUX_IGNORE_NEVERALLOWS=true
 
 # upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
 up(){
-	curl --retry 18 --upload-file $1 http://temp.sh
-	# 3 days, 5 GB limit
+	curl --retry 18 --upload-file $1 https://free.keep.sh
+	# 1 days, 0.5 GB limit
 }
 
 # It's recommended to use google drive(rclone) as upload solution for coping with the time limit. Un-comment next 3 lines to upload with rclone in drive. Also change apon and junk according to your config name, uploading folder of drive
@@ -44,10 +46,14 @@ tg(){
 id=-1001659048493
 
 # compile plox
-make systemimage -j$(nproc --all)
-#blissify -v lavender &
-#sleep 85m
-#kill %1
+if [ $1 == system ]; then
+make systemimage -j$(nproc --all) &
+sleep 90m
+kill %1
+elif [ $1 == vendor ]; then
+make vendorimage -j$(nproc --all)
+make bootimage -j$(nproc --all)
+fi
 
 # Compress function with pigz for faster compression
 com ()
@@ -57,16 +63,18 @@ com ()
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 if [ -e out/target/product/lavender/vendor.img ]; then
-time com out/target/product/lavender/vendor.img 4
+time com out/target/product/lavender/vendor.img 6
 send_zip=$(up out/target/product/lavender/vendor.img.tar.gz) && tg $id "Build Succeed!
 $send_zip"
-elif [ -e out/target/product/lavender/system.img ]; then
+fi
+if [ -e out/target/product/lavender/system.img ]; then
 time com out/target/product/lavender/system.img 6
 send_zip=$(up out/target/product/lavender/system.img.tar.gz) && tg $id "Build Succeed!
 $send_zip"
-elif [ -e out/target/product/lavender/boot.img ]; then
-time com out/target/product/lavender/boot.img 4
+fi
+if [ -e out/target/product/lavender/boot.img ]; then
+time com out/target/product/lavender/boot.img 6
 send_zip=$(up out/target/product/lavender/boot.img.tar.gz) && tg $id "Build Succeed!
 $send_zip"
 fi
-#ccache -s # Let's print ccache statistics finally
+ccache -s # Let's print ccache statistics finally
