@@ -10,6 +10,6 @@ steps:
    commands:
      - bash download_ccache
      - bash sync
-     - bash build vendor
+     - bash build system
      - bash upload_ccache
      
