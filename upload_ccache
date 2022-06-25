@@ -22,8 +22,8 @@ echo "|| Compressing CCACHE ||"
 # First compress in with pogz in a single zip.
 time com ccache 1 # Compression level 1, its enough
 
-# Now split in 0.4GB parts
-7za a -tzip -v400m -mx=0 ccache_backup.zip ccache.tar.gz
+# Now split in 2GB parts
+7za a -tzip -v2048m -mx=0 ccache_backup.zip ccache.tar.gz
 
 # upload all parts
 echo "|| Uploading CCACHE ||"
