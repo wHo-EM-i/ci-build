@@ -29,7 +29,7 @@ fi
 
 # upload function for uploading rom zip file! I don't want unwanted builds in my google drive haha!
 up(){
-	curl --retry 18 --upload-file $1 https://free.keep.sh
+	curl --retry 18 --upload-file $1 temp.sh
 	# 1 days, 0.5 GB limit
 }
 
