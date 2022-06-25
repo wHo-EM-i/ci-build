@@ -4,6 +4,7 @@ cd /tmp/rom # Depends on where source got synced
 
 # Normal build steps
 . /tmp/ci/build.sh
+export _JAVA_OPTIONS="-Xmx10g"
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
