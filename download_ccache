@@ -21,3 +21,6 @@ fi
 
 # Remove unnecessary downloaded file
 rm -rf *.tar.gz
+
+# fix
+echo "" > /etc/mtab
