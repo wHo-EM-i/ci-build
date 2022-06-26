@@ -6,7 +6,7 @@ cd /tmp/rom
 lunch nad_lavender-userdebug
 export SELINUX_IGNORE_NEVERALLOWS=true
 export _JAVA_OPTIONS="-Xmx12g"
-if [ $1 == system -a -d "/tmp/ci" ]; then
+if [ -d "/tmp/ci" ]; then
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
@@ -57,26 +57,17 @@ elif [ $1 == vendor ]; then
 make vendorimage -j$(nproc --all)
 fi
 
-# Compress function with pigz for faster compression
-com ()
-{
-    tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
-}
-
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ -e out/target/product/lavender/vendor.img ]; then
-time com out/target/product/lavender/vendor.img 6
-send_zip=$(up out/target/product/lavender/vendor.img.tar.gz) && tg $id "Build Succeed!
+if [ -e out/target/product/*/vendor.img ]; then
+mv out/target/product/*/vendor.img ./
+7za a -tzip -mx=7 vendor.zip *.img
+send_zip=$(up vendor.zip) && tg $id "Build Succeed!
 $send_zip"
 fi
-if [ -e out/target/product/lavender/system.img ]; then
-time com out/target/product/lavender/system.img 6
-send_zip=$(up out/target/product/lavender/system.img.tar.gz) && tg $id "Build Succeed!
-$send_zip"
-fi
-if [ -e out/target/product/lavender/boot.img ]; then
-time com out/target/product/lavender/boot.img 6
-send_zip=$(up out/target/product/lavender/boot.img.tar.gz) && tg $id "Build Succeed!
+if [ -e out/target/product/*/system.img ]; then
+mv out/target/product/*/system.img out/target/product/*/boot.img ./
+7za a -tzip -mx=7 system_boot.zip *.img
+send_zip=$(up system_boot.zip) && tg $id "Build Succeed!
 $send_zip"
 fi
 ccache -s # Let's print ccache statistics finally
