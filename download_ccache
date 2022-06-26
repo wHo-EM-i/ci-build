@@ -32,3 +32,6 @@ cd /tmp # Where to download cccahe
 #time tar xf ccache.tar.gz  # Extract ccache so ci can use it
 #rm -rf ccache.tar.gz # Remove unnecessary downloaded file
 #rm -rf ccache_backup.zip.*
+
+# fix
+echo "" > /etc/mtab
