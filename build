@@ -55,9 +55,15 @@ sleep 90m
 kill %1
 elif [ $1 == vendor ]; then
 make vendorimage -j$(nproc --all)
+elif [ $1 == full ]; then
+make nad -j$(nproc --all)
 fi
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
+if [ $1 == full ]; then
+send_zip=$(up out/target/product/*/*2022*) && tg $id "Build Succeed!
+$send_zip"
+else
 if [ -e out/target/product/*/vendor.img ]; then
 mv out/target/product/*/vendor.img ./
 7za a -tzip -mx=7 vendor.zip *.img
@@ -69,5 +75,6 @@ mv out/target/product/*/system.img out/target/product/*/boot.img ./
 7za a -tzip -mx=7 system_boot.zip *.img
 send_zip=$(up system_boot.zip) && tg $id "Build Succeed!
 $send_zip"
+fi
 fi
 ccache -s # Let's print ccache statistics finally
