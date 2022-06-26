@@ -3,8 +3,9 @@ cd /tmp/rom
 
 # Normal build steps
 . build/envsetup.sh
-lunch nad_lavender-userdebug
-export SELINUX_IGNORE_NEVERALLOWS=true
+lunch aospa_lavender-user
+export TZ=Asia/Kolkata
+#export SELINUX_IGNORE_NEVERALLOWS=true
 export _JAVA_OPTIONS="-Xmx12g"
 if [ -d "/tmp/ci" ]; then
 export CCACHE_DIR=/tmp/ccache
@@ -56,7 +57,7 @@ kill %1
 elif [ $1 == vendor ]; then
 make vendorimage -j$(nproc --all)
 elif [ $1 == full ]; then
-make nad -j$(nproc --all)
+./rom-build.sh lavender -t user -v beta
 fi
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!

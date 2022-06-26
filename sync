@@ -8,16 +8,16 @@ git config --global user.name "wHoEMi"
 git config --global user.email "ehteshammalik18998@gmail.com"
 
 # Repo init command, that -device,-mips,-darwin,-notdefault part will save you more time and storage to sync, add more according to your rom and choice. Optimization is welcomed! Let's make it quit, and with depth=1 so that no unnecessary things.
-repo init --depth=1 --no-repo-verify -u https://github.com/NusantaraProject-ROM/android_manifest -b 10 -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/AOSPA/manifest -b sapphire -g default,-mips,-darwin,-notdefault
 
 # Local manifest
-#git clone https://github.com/ImPrashantt/local_manifest.git --depth 1 -b arrow .repo/local_manifests
+git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b sapphire .repo/local_manifests
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 # Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
-git clone --depth=1 https://github.com/ImSpiDy/device_xiaomi_lavender -b 10 device/xiaomi/lavender
-git clone --depth=1 https://github.com/ImSpiDy/vendor_xiaomi_lavender -b 10 vendor/xiaomi/lavender
-git clone --depth=1 https://github.com/stormbreaker-project/kernel_xiaomi_lavender -b oldcam-hmp kernel/xiaomi/lavender
+#git clone --depth=1 https://github.com/ImSpiDy/device_xiaomi_lavender -b 10 device/xiaomi/lavender
+#git clone --depth=1 https://github.com/ImSpiDy/vendor_xiaomi_lavender -b 10 vendor/xiaomi/lavender
+#git clone --depth=1 https://github.com/stormbreaker-project/kernel_xiaomi_lavender -b oldcam-hmp kernel/xiaomi/lavender
 #git clone -b master --depth=1 https://github.com/kdrag0n/proton-clang.git prebuilts/clang/host/linux-x86/clang-proton
