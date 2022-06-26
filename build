@@ -55,7 +55,6 @@ sleep 90m
 kill %1
 elif [ $1 == vendor ]; then
 make vendorimage -j$(nproc --all)
-make bootimage -j$(nproc --all)
 fi
 
 # Compress function with pigz for faster compression
