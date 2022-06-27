@@ -10,6 +10,7 @@ cd /tmp # Where to download cccahe
 echo "|| Downloading CCACHE ||"
 time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.001
 time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.002
+time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.003
 
 echo "|| Extracting CCACHE ||"
 7za x ccache_backup.zip.001
