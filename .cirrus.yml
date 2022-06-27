@@ -15,6 +15,6 @@ task:
     sync_script:
       - bash sync
     build_script:
-      - bash build
+      - bash build system
     upload_ccache_script: # Upload ccache to cloud foreground
       - bash upload_ccache # Ccache uploading script
