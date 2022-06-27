@@ -18,7 +18,7 @@ com ()
 }
 
 # disable ccache upload if rom compilation was successful
-if [ ! -e out/target/product/*/*2022* ]; then
+if [ ! -e rom/out/target/product/*/*2022* ]; then
 if [ -d /tmp/ccache ]; then
 echo "|| Compressing CCACHE ||"
 
