@@ -8,6 +8,11 @@ apt update && apt install -y wget pigz openssh-server
 # setup ssh keys for SCP upload
 ./ssh_keys $ssh_pass
 
+# setup rclone config
+mkdir -p ~/.config/rclone
+echo "$r_config" > ~/.config/rclone/rclone.conf
+echo "$r_perm" > ~/.config/rclone/perm.json
+
 cd /tmp # Where to download cccahe
 
 echo "|| Downloading CCACHE ||"

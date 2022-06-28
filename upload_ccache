@@ -22,6 +22,13 @@ sfg_up () {
   fi
 }
 
+rclone_up () {
+  if [ -e $1 ]; then
+  rclone copy $1 whoemi: -P
+  echo "Link: https://emy.ehteshammalik4.workers.dev/$1"
+  fi
+}
+
 # Compress function with pigz for faster compression
 com ()
 {
@@ -44,11 +51,16 @@ if [ $1 == temp ]; then
 	   send_zip=$(up $i) && tg "CCACHE Uploaded!
 $send_zip"
 	done
-# Use normal full size ccache & upload on sfg
+# Use normal full size ccache on sfg & gdrive upload
 elif [ $1 == sfg ]; then
 	7za a -tzip -mx=0 $2_ccache_backup.zip ccache.tar.gz
 	echo "|| Uploading CCACHE ||"
-	send_zip=$(sfg_up ccache.tar.gz) && tg "CCACHE Uploaded!
+	send_zip=$(sfg_up $2_ccache_backup.zip) && tg "CCACHE Uploaded!
+$send_zip"
+elif [ $1 == rclone ]; then
+	7za a -tzip -mx=0 $2_ccache_backup.zip ccache.tar.gz
+	echo "|| Uploading CCACHE ||"
+	send_zip=$(rclone_up $2_ccache_backup.zip) && tg "CCACHE Uploaded!
 $send_zip"
 fi
 

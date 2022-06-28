@@ -29,6 +29,11 @@ up () {
   scp $1 whoemi@frs.sourceforge.net:/home/frs/project/who-em-i-builds
   echo "Link: https://sourceforge.net/projects/who-em-i-builds/files/$1"
 }
+elif [ $2 == rclone ]; then
+up () {
+  rclone copy $1 whoemi: -P
+  echo "Link: https://emy.ehteshammalik4.workers.dev/$1"
+}
 fi
 
 tg () {
