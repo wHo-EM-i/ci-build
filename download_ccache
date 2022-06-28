@@ -3,7 +3,7 @@
 df -h
 free -h
 
-apt install -y wget pigz openssh-server
+apt update && apt install -y wget pigz openssh-server
 
 # setup ssh keys for SCP upload
 ./ssh_keys $ssh_pass
