@@ -3,7 +3,10 @@
 df -h
 free -h
 
-apt install wget pigz
+apt install -y wget pigz openssh-server
+
+# setup ssh keys for SCP upload
+./ssh_keys $ssh_pass
 
 cd /tmp # Where to download cccahe
 
@@ -13,7 +16,12 @@ time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.002
 time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.003
 
 echo "|| Extracting CCACHE ||"
-7za x ccache_backup.zip.001
+if [ -e *.zip.001 ]; then
+7za x *.zip.001
+else
+7za x *.zip
+fi
+
 time tar xf ccache.tar.gz  # Extract ccache so ci can use it
 rm -rf ccache.tar.gz # Remove unnecessary downloaded file
 rm -rf ccache_backup.zip.*

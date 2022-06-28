@@ -5,9 +5,15 @@ cd /tmp
 if [ -d /tmp/ccache ]; then
 up () {
   if [ -e $1 ]; then
-  echo "uploading $1"
 	curl --retry 18 --upload-file $1 temp.sh
 	# 24h, 500mb limit
+  fi
+}
+
+sfg_up () {
+  if [ -e $1 ]; then
+  scp $1 whoemi@frs.sourceforge.net:/home/frs/project/who-em-i-builds
+  echo "Link: https://sourceforge.net/projects/who-em-i-builds/files/$1"
   fi
 }
 
@@ -22,17 +28,23 @@ if [ ! -e rom/out/target/product/*/*2022* ]; then
 if [ -d /tmp/ccache ]; then
 echo "|| Compressing CCACHE ||"
 
-# First compress in with pogz in a single zip.
+# First compress in with pigz in a single zip.
 time com ccache 1 # Compression level 1, its enough
 
-# Now split in 2GB parts
-7za a -tzip -v2048m -mx=0 ccache_backup.zip ccache.tar.gz
-
-# upload all parts
-echo "|| Uploading CCACHE ||"
-for i in /tmp/ccache_backup.zip.*; do
-   time up ${i}
-done
+# Now split into 2GB parts (if user selects temp.sh upload)
+if [ $1 == temp ]; then
+	7za a -tzip -v2048m -mx=0 $2_ccache_backup.zip ccache.tar.gz
+	# upload all parts
+	echo "|| Uploading CCACHE ||"
+	for i in /tmp/$2_ccache_backup.zip.*; do
+	   time up ${i}
+	done
+	fi
+# Use normal full size ccache & upload on sfg
+elif [ $1 == sfg ]; then
+	7za a -tzip -mx=0 $2_ccache_backup.zip ccache.tar.gz
+	echo "|| Uploading CCACHE ||"
+	sfg_up ccache.tar.gz
 fi
 
 sleep 5
