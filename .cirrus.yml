@@ -9,7 +9,11 @@ task:
       image: aarunalr/aosp-build
       cpu: 8
       memory: 32G
+    download_ccache_background_script: # To download ccache in background
+      - bash download_ccache # Ccache download script
     sync_script:
       - bash sync
     build_script:
       - bash build
+    upload_ccache_script: # Upload ccache to cloud foreground
+      - bash upload_ccache # Ccache uploading script
