@@ -31,6 +31,16 @@ up () {
 }
 fi
 
+#repo link to upload rom zip
+repo_link=https://github.com/wHo-EM-i/ci-build
+
+# login in github
+echo $gh_token > mytoken.txt
+gh auth login --with-token < mytoken.txt
+
+# create a release tag
+gh release create $rom --generate-notes --repo $repo_link
+
 tg () {
 	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
 }
@@ -55,8 +65,11 @@ fi
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 if [ $1 == full -a -e out/target/product/*/*2022* ]; then
-send_zip=$(up out/target/product/*/*2022*) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-$send_zip"
+cd out/target/product/lavender/
+# upload file
+gh release upload --clobber $rom *2022*zip --repo $repo_link 
+tg "Build Succeed! Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+$repo_link/releases"
 else
 if [ -e out/target/product/*/vendor.img ]; then
 mv out/target/product/*/vendor.img ./
