@@ -3,6 +3,14 @@
 mkdir -p /tmp/rom # Where to sync source
 cd /tmp/rom
 
+tg () {
+	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
+}
+
+tg "Build started! 
+https://cirrus-ci.com/build/$CIRRUS_BUILD_ID"
+SECONDS=0
+
 ##some of my work
 git config --global user.name "wHoEMi"
 git config --global user.email "ehteshammalik18998@gmail.com"
@@ -21,3 +29,5 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 #git clone --depth=1 https://github.com/ImSpiDy/vendor_xiaomi_lavender -b 10 vendor/xiaomi/lavender
 #git clone --depth=1 https://github.com/stormbreaker-project/kernel_xiaomi_lavender -b oldcam-hmp kernel/xiaomi/lavender
 #git clone -b master --depth=1 https://github.com/kdrag0n/proton-clang.git prebuilts/clang/host/linux-x86/clang-proton
+
+tg "Cloned all Sources Successfully! Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec "

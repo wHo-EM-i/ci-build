@@ -31,41 +31,43 @@ up () {
 }
 fi
 
-tg(){
-	bot_api=1713012266:AAHEMmHMyZ-dxqMU4hQvEv_FHFJBP3UbDro
-	your_telegram_id=$1
-	msg=$2
-	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$msg&chat_id=${your_telegram_id}"
+tg () {
+	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
 }
-
-id=-1001659048493
 
 # compile plox
 if [ $1 == system ]; then
+tg "Building system.img to collect some ccache!"
+SECONDS=0
 make systemimage -j$(nproc --all) &
 sleep 85m
+tg "Stopping system.img & preparing for ccache upload!"
 kill %1
 elif [ $1 == vendor ]; then
+tg "Building vendor.img to collect some ccache!"
+SECONDS=0
 make vendorimage -j$(nproc --all)
 elif [ $1 == full ]; then
+tg "Building ROM...!"
+SECONDS=0
 ./rom-build.sh lavender -t user -v beta
 fi
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ $1 == full ]; then
-send_zip=$(up out/target/product/*/*2022*) && tg $id "Build Succeed!
+if [ $1 == full -a -e out/target/product/*/*2022* ]; then
+send_zip=$(up out/target/product/*/*2022*) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 $send_zip"
 else
 if [ -e out/target/product/*/vendor.img ]; then
 mv out/target/product/*/vendor.img ./
 7za a -tzip -mx=7 vendor.zip *.img
-send_zip=$(up vendor.zip) && tg $id "Build Succeed!
+send_zip=$(up vendor.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 $send_zip"
 fi
 if [ -e out/target/product/*/system.img ]; then
 mv out/target/product/*/system.img out/target/product/*/boot.img ./
 7za a -tzip -mx=7 system_boot.zip *.img
-send_zip=$(up system_boot.zip) && tg $id "Build Succeed!
+send_zip=$(up system_boot.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec
 $send_zip"
 fi
 fi

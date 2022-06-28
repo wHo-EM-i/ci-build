@@ -3,6 +3,11 @@
 cd /tmp
 
 if [ -d /tmp/ccache ]; then
+
+tg () {
+	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
+}
+
 up () {
   if [ -e $1 ]; then
 	curl --retry 18 --upload-file $1 temp.sh
@@ -37,12 +42,15 @@ if [ $1 == temp ]; then
 	echo "|| Uploading CCACHE ||"
 	for i in /tmp/$2_ccache_backup.zip.*; do
 	   time up ${i}
+      send_zip=$(up $i) && tg "CCACHE Uploaded!
+$send_zip"
 	done
 # Use normal full size ccache & upload on sfg
 elif [ $1 == sfg ]; then
 	7za a -tzip -mx=0 $2_ccache_backup.zip ccache.tar.gz
 	echo "|| Uploading CCACHE ||"
-	sfg_up ccache.tar.gz
+	send_zip=$(sfg_up ccache.tar.gz) && tg "CCACHE Uploaded!
+$send_zip"
 fi
 
 sleep 5
