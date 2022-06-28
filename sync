@@ -1,0 +1,22 @@
+#!/bin/bash
+
+mkdir -p /tmp/rom # Where to sync source
+cd /tmp/rom
+
+##some of my work
+apt install git
+git config --global user.name "keneankit01"
+git config --global user.email "keneankit01@gmail.com"
+# Repo init command, that -device,-mips,-darwin,-notdefault part will save you more time and storage to sync, add more according to your rom and choice. Optimization is welcomed! Let's make it quit, and with depth=1 so that no unnecessary things.
+repo init --depth=1 -u https://github.com/Wave-Project/manifest -b r
+
+# Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
+
+# Clone local manifest! So that no need to manually git clone repos or change hals, you can use normal git clone or rm and re clone, they will cost little more time, and you may get timeout! Let's make it quit and depth=1 too.
+git clone https://github.com/Wave-Project/device_xiaomi_sweet.git device/xiaomi/sweet
+git clone https://github.com/Wave-Project/device_xiaomi_sm6150-common.git device/xiaomi/sm6150-common
+git clone https://github.com/Wave-Project/vendor_xiaomi_sm6150-common.git vendor/xiaomi/sm6150-common
+git clone https://github.com/Wave-Project/vendor_xiaomi_sweet.git vendor/xiaomi/sweet
+git clone https://github.com/Rasenkai/kernel_sweet.git kernel/xiaomi/sm6150
+git clone https://github.com/LineageOS/android_hardware_xiaomi.git hardware/xiaomi

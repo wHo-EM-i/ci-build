@@ -1,0 +1,20 @@
+env: # Environment variables to pass to all tasks
+    CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
+    CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
+    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    # For rclone with google drive or any cloud! After first commit pushing, login to https://cirrus-ci.com , click top left corner 3 dot menu, click repository(yourname/aosp-builder) > Repository Settings > Secured Variables > enter content of ~/.config/rclone/rclone.conf (from pc where you setup rclone) > ENCRYPT, copy that ENCRYPTED hash
+    # ENCRYPTED variables is unique for every repository, so you cant use my one, create you rclone config https://rclone.org/drive/#making-your-own-client-id
+    rclone_config: "ENCRYPTED[e6b57489e5e364b7013542660ce6823fc390190fed3d96d36c5df048fb2750a23cb0d4180171363a566d38eb8ce8bf2f]"
+
+task:
+    name: aosp # Project name
+    timeout_in: 260m # Otherwise it will timeout at 60m automatically, 120m highest in free account
+    container:
+      image: aarunalr/aosp-build # It has built-in setup environment + repo, aria2, rclone, pigz, username ci, and email ci@ci.ci [You can use your own docker image if you want, or you can use this one too!]
+      cpu: 8  #8 or less cpu for dummy build, 8 cpu for the final build, 8cpu highest for free accounts. Don't try to use more than 8cpu as free user, you may get blocked by ci.
+      memory: 32G # So that we can have ram when needed, 32G highest
+    sync_script: # To sync source
+      - bash sync # Source sync script
+    build_script: # Actual build script foreground
+      - bash build # Build script to run
