@@ -19,7 +19,8 @@ time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.003
 echo "|| Extracting CCACHE ||"
 if [ -e *.zip.001 ]; then
 7za x *.zip.001
-elif if [ -e *.tar.gz ]; then
+fi
+if [ -e *.tar.gz ]; then
 time tar xf *.tar.gz
 fi
 

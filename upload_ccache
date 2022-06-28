@@ -25,7 +25,6 @@ com ()
 
 # disable ccache upload if rom compilation was successful
 if [ ! -e rom/out/target/product/*/*2022* ]; then
-if [ -d /tmp/ccache ]; then
 echo "|| Compressing CCACHE ||"
 
 # First compress in with pigz in a single zip.
@@ -39,7 +38,6 @@ if [ $1 == temp ]; then
 	for i in /tmp/$2_ccache_backup.zip.*; do
 	   time up ${i}
 	done
-	fi
 # Use normal full size ccache & upload on sfg
 elif [ $1 == sfg ]; then
 	7za a -tzip -mx=0 $2_ccache_backup.zip ccache.tar.gz
