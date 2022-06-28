@@ -16,6 +16,6 @@ task:
     sync_script:
       - bash sync
     build_script:
-      - bash build full #temp/sfg
+      - bash build full sfg
     upload_ccache_script: # Upload ccache to cloud foreground
-      - bash upload_ccache #temp/sfg #rom_name
+      - bash upload_ccache sfg aospa

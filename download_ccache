@@ -15,16 +15,17 @@ time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.001
 time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.002
 time wget https://nebula.uvscuti.workers.dev/0:/ccache_backup.zip.003
 
+# Extract ccache so ci can use it
 echo "|| Extracting CCACHE ||"
 if [ -e *.zip.001 ]; then
 7za x *.zip.001
-else
-7za x *.zip
+elif if [ -e *.tar.gz ]; then
+time tar xf *.tar.gz
 fi
 
-time tar xf ccache.tar.gz  # Extract ccache so ci can use it
-rm -rf ccache.tar.gz # Remove unnecessary downloaded file
-rm -rf ccache_backup.zip.*
+# Remove unnecessary downloaded file
+rm -rf *.tar.gz
+rm -rf *.zip.*
 
 # fix
 echo "" > /etc/mtab
