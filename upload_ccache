@@ -41,8 +41,7 @@ if [ $1 == temp ]; then
 	# upload all parts
 	echo "|| Uploading CCACHE ||"
 	for i in /tmp/$2_ccache_backup.zip.*; do
-	   time up ${i}
-      send_zip=$(up $i) && tg "CCACHE Uploaded!
+	   send_zip=$(up $i) && tg "CCACHE Uploaded!
 $send_zip"
 	done
 # Use normal full size ccache & upload on sfg
