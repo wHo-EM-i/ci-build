@@ -67,10 +67,10 @@ esac
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 case "$1" in
 	full)
-		if [ -e out/target/product/*/*2022*zip ]; then
-		send_zip=$(up out/target/product/*/*2022*zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+        cd out/target/product/$(grep unch /tmp/ci/build -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)/
+        rom_zip=`ls *$(grep unch /tmp/ci/build -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)*2022*.zip`
+		send_zip=$(up $rom_zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 		$send_zip"
-		fi
 	;;
 	system)
 		if [ -e out/target/product/*/system.img ]; then
