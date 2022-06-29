@@ -24,22 +24,16 @@ up () {
 	curl --retry 18 --upload-file $1 temp.sh
 	# 3 days, 4.0 GB limit
 }
-elif [ $2 == sfg ]; then
+elif [ $2 == gh ]; then
+repo_link=https://github.com/wHo-EM-i/ci-build  # repo link to upload rom zip
+echo $gh_token > mytoken.txt # login in github
+gh auth login --with-token < mytoken.txt
+gh release create $rom --generate-notes --repo $repo_link # create a release tag
 up () {
-  scp $1 whoemi@frs.sourceforge.net:/home/frs/project/who-em-i-builds
-  echo "Link: https://sourceforge.net/projects/who-em-i-builds/files/$1"
+  gh release upload --clobber $rom $1 --repo $repo_link 
+  echo "Link: $repo_link/releases/download/$rom/$1"
 }
 fi
-
-#repo link to upload rom zip
-repo_link=https://github.com/wHo-EM-i/ci-build
-
-# login in github
-echo $gh_token > mytoken.txt
-gh auth login --with-token < mytoken.txt
-
-# create a release tag
-gh release create $rom --generate-notes --repo $repo_link
 
 tg () {
 	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
@@ -64,19 +58,18 @@ SECONDS=0
 fi
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ $1 == full -a -e out/target/product/*/*2022* ]; then
-cd out/target/product/lavender/
+if [ $1 == full -a -e out/target/product/*/*2022*zip ]; then
 # upload file
-gh release upload --clobber $rom *2022*zip --repo $repo_link 
-tg "Build Succeed! Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-$repo_link/releases"
-else
+send_zip=$(up out/target/product/*/*2022*zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+$send_zip"
+elif [ $1 == vendor ]; then
 if [ -e out/target/product/*/vendor.img ]; then
 mv out/target/product/*/vendor.img ./
 7za a -tzip -mx=7 vendor.zip *.img
 send_zip=$(up vendor.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 $send_zip"
 fi
+elif [ $1 == system ]; then
 if [ -e out/target/product/*/system.img ]; then
 mv out/target/product/*/system.img out/target/product/*/boot.img ./
 7za a -tzip -mx=7 system_boot.zip *.img
