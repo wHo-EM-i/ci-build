@@ -19,62 +19,74 @@ apt remove ccache
 fi
 
 # upload function for uploading rom zip file
-if [ $2 == temp ]; then
-up () {
-	curl --retry 18 --upload-file $1 temp.sh
-	# 3 days, 4.0 GB limit
-}
-elif [ $2 == gh ]; then
-repo_link=https://github.com/wHo-EM-i/ci-build  # repo link to upload rom zip
-echo $gh_token > mytoken.txt # login in github
-gh auth login --with-token < mytoken.txt
-gh release create $rom --generate-notes --repo $repo_link # create a release tag
-up () {
-  gh release upload --clobber $rom $1 --repo $repo_link 
-  echo "Link: $repo_link/releases/download/$rom/$1"
-}
-fi
+case "$2" in
+		 temp)
+		 echo "Using temps.sh for upload"
+		 up () {
+			curl --retry 18 --upload-file $1 temp.sh
+			# 3d, 4000mb limit
+			}
+		 ;;
+		 gh)
+		 echo "Using gh for upload"
+		 repo_link=https://github.com/wHo-EM-i/ci-build  # repo link to upload rom zip
+		 echo $gh_token > mytoken.txt # login in github
+		 gh auth login --with-token < mytoken.txt
+		 gh release create $rom --generate-notes --repo $repo_link # create a release tag
+		 up () {
+			gh release upload --clobber $rom $1 --repo $repo_link
+			echo "Link: $repo_link/releases/download/$rom/$1"
+			}
+esac
 
 tg () {
 	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
 }
 
 # compile plox
-if [ $1 == system ]; then
-tg "Building system.img to collect some ccache!"
-SECONDS=0
-make systemimage -j$(nproc --all) &
-sleep 85m
-tg "Stopping system.img & preparing for ccache upload!"
-kill %1
-elif [ $1 == vendor ]; then
-tg "Building vendor.img to collect some ccache!"
-SECONDS=0
-make vendorimage -j$(nproc --all)
-elif [ $1 == full ]; then
-tg "Building ROM...!"
-SECONDS=0
-./rom-build.sh lavender -t user -v beta
-fi
+case "$1" in
+	full)
+		tg "Building ROM...!"
+		SECONDS=0
+		./rom-build.sh lavender -t user -v beta
+	;;
+	system)
+		tg "Building system.img to collect some ccache!"
+		SECONDS=0
+		make systemimage -j$(nproc --all) &
+		sleep 85m
+		tg "Stopping system.img & preparing for ccache upload!"
+		kill %1
+	;;
+	vendor)
+		tg "Building vendor.img to collect some ccache!"
+		SECONDS=0
+		make vendorimage -j$(nproc --all)
+esac
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ $1 == full -a -e out/target/product/*/*2022*zip ]; then
-# upload file
-send_zip=$(up out/target/product/*/*2022*zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-$send_zip"
-elif [ $1 == vendor ]; then
-if [ -e out/target/product/*/vendor.img ]; then
-mv out/target/product/*/vendor.img ./
-7za a -tzip -mx=7 vendor.zip *.img
-send_zip=$(up vendor.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-$send_zip"
-fi
-elif [ $1 == system ]; then
-if [ -e out/target/product/*/system.img ]; then
-mv out/target/product/*/system.img out/target/product/*/boot.img ./
-7za a -tzip -mx=7 system_boot.zip *.img
-send_zip=$(up system_boot.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec
-$send_zip"
-fi
-fi
+case "$1" in
+	full)
+		if [ -e out/target/product/*/*2022*zip ]; then
+		send_zip=$(up out/target/product/*/*2022*zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		$send_zip"
+		fi
+	;;
+	system)
+		if [ -e out/target/product/*/system.img ]; then
+		mv out/target/product/*/system.img out/target/product/*/boot.img ./
+		7za a -tzip -mx=7 system_boot.zip *.img
+		send_zip=$(up system_boot.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec
+		$send_zip"
+		fi
+	;;
+	vendor)
+		if [ -e out/target/product/*/vendor.img ]; then
+		mv out/target/product/*/vendor.img ./
+		7za a -tzip -mx=7 vendor.zip *.img
+		send_zip=$(up vendor.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		$send_zip"
+		fi
+esac
+
 ccache -s # Let's print ccache statistics finally

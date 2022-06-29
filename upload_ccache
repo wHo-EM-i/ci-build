@@ -8,25 +8,29 @@ tg () {
 	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
 }
 
-if [ $2 == temp ]; then
-up () {
-  if [ -e $1 ]; then
-	curl --retry 18 --upload-file $1 temp.sh
-	# 3d, 4000mb limit
-  fi
-}
-elif [ $2 == gh ]; then
-repo_link=https://github.com/wHo-EM-i/ci-build  # repo link to upload rom zip
-echo $gh_token > mytoken.txt # login in github
-gh auth login --with-token < mytoken.txt
-gh release create ${rom}_ccache --generate-notes --repo $repo_link # create a release tag
-up () {
-  if [ -e $1 ]; then
-  gh release upload --clobber ${rom}_ccache $1 --repo $repo_link 
-  echo "Link: $repo_link/releases/download/${rom}_ccache/$1"
-  fi
-}
-fi
+case "$2" in
+		 temp)
+		 echo "Using temps.sh for upload"
+		 up () {
+  		if [ -e $1 ]; then
+			curl --retry 18 --upload-file $1 temp.sh
+			# 3d, 4000mb limit
+  		fi
+			}
+		 ;;
+		 gh)
+		 echo "Using gh for upload"
+		 repo_link=https://github.com/wHo-EM-i/ci-build  # repo link to upload rom zip
+		 echo $gh_token > mytoken.txt # login in github
+		 gh auth login --with-token < mytoken.txt
+		 gh release create ${rom}_ccache --generate-notes --repo $repo_link # create a release tag
+		 up () {
+  		if [ -e $1 ]; then
+			gh release upload --clobber ${rom}_ccache $1 --repo $repo_link
+			echo "Link: $repo_link/releases/download/${rom}_ccache/$1"
+  		fi
+			}
+esac
 
 # Compress function with pigz for faster compression
 com ()
@@ -42,15 +46,14 @@ echo "|| Compressing CCACHE ||"
 time com ccache 1 # Compression level 1, its enough
 
 # Now split into parts (under 2gb to avoid issues with gh release)
-if [ $1 == temp ]; then
-	7za a -tzip -v1980m -mx=0 ${rom}_ccache_backup.zip ccache.tar.gz
-	# upload all parts
-	echo "|| Uploading CCACHE ||"
-	for i in /tmp/${rom}_ccache_backup.zip.*; do
-	   send_zip=$(up $i) && tg "CCACHE Uploaded!
-$send_zip"
-	done
-fi
+7za a -tzip -v1980m -mx=0 ${rom}_ccache_backup.zip ccache.tar.gz
+
+# upload all parts
+echo "|| Uploading CCACHE ||"
+for i in /tmp/${rom}_ccache_backup.zip.*; do
+	send_zip=$(up $i) && tg "CCACHE Uploaded!
+	$send_zip"
+done
 
 sleep 5
 echo "|| Uploaded ||"
