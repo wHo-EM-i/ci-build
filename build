@@ -67,8 +67,8 @@ esac
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 case "$1" in
 	full)
-		if [ -e out/target/product/*/*2022*zip ]; then
-		send_zip=$(up out/target/product/*/*2022*zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		if [ -e out/target/product/*/aospa-sapphire-*2022*zip ]; then
+		send_zip=$(up out/target/product/*/aospa-sapphire-*2022*zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 		$send_zip"
 		fi
 	;;

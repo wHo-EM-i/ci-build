@@ -39,7 +39,7 @@ com ()
 }
 
 # disable ccache upload if rom compilation was successful
-if [ ! -e rom/out/target/product/*/*2022*zip ]; then
+if [ ! -e rom/out/target/product/*/aospa-sapphire-*2022*zip ]; then
 echo "|| Compressing CCACHE ||"
 
 # First compress in with pigz in a single zip.
