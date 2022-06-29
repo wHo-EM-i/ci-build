@@ -3,3 +3,5 @@
 # set your gmail and email
 git config --global user.email "$gmail"
 git config --global user.name "$CIRRUS_REPO_OWNER"
+
+device_codename=$(grep unch /tmp/ci/build.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)

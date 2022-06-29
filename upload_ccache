@@ -3,10 +3,15 @@
 cd /tmp/ccache
 . /tmp/ci/function
 
+# disable ccache upload if rom compilation was successful
+if [ ! -e /tmp/rom/out/target/product/$device_codename/*$device_codename*2022*zip ]; then
+
 echo "|| Uploading CCACHE ||"
 git add -f -A .
 git commit -sm "CCACHE: IMPORT CCACHE FROM NEW BUILD"
 git push -f
+
+fi
 
 # clean storage
 rm -rf /tmp/*
