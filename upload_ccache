@@ -39,13 +39,10 @@ com ()
 }
 
 # disable ccache upload if rom compilation was successful
-cd rom/out/target/product/$(grep unch /tmp/ci/build -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)/
-rom_zip=`ls *$(grep unch /tmp/ci/build -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)*2022*.zip`
-
-if [ ! -e $rom_zip ]; then
+rom_zip=`ls /tmp/rom/out/target/product/*/*.zip`
+if [ -z $rom_zip ]; then
 
 echo "|| Compressing CCACHE ||"
-cd /tmp
 
 # First compress in with pigz in a single zip.
 time com ccache 1 # Compression level 1, its enough
