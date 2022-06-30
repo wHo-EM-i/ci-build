@@ -49,6 +49,9 @@ case "$1" in
 		tg "Building ROM...!"
 		SECONDS=0
 		./rom-build.sh lavender -t user -v beta
+    if [ ! -e out/target/product/*/*2022*.zip ]; then # you don't have to run this if you're not facing oom kill issue while build is about 98-98%
+		./rom-build.sh lavender -t user -v beta # re-run the build cuz there's still time left considering only few targets left
+    fi
 	;;
 	system)
 		tg "Building system.img to collect some ccache!"
@@ -67,10 +70,10 @@ esac
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
 case "$1" in
 	full)
-        if [ -e *.zip ]; then
+    if [ -e *.zip ]; then
 		send_zip=$(up *.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 		$send_zip"
-		else
+		elif [ -e out/target/product/*/*2022*.zip ]; then
         send_zip=$(up out/target/product/*/*2022*.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
 		$send_zip"
 		fi
