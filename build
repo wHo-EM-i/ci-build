@@ -68,31 +68,9 @@ case "$1" in
 esac
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-case "$1" in
-	full)
-    if [ -e *.zip ]; then
-		send_zip=$(up *.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-		$send_zip"
-		elif [ -e out/target/product/*/*2022*.zip ]; then
-        send_zip=$(up out/target/product/*/*2022*.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-		$send_zip"
-		fi
-	;;
-	system)
-		if [ -e out/target/product/*/system.img ]; then
-		mv out/target/product/*/system.img out/target/product/*/boot.img ./
-		7za a -tzip -mx=7 system_boot.zip *.img
-		send_zip=$(up system_boot.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec
-		$send_zip"
-		fi
-	;;
-	vendor)
-		if [ -e out/target/product/*/vendor.img ]; then
-		mv out/target/product/*/vendor.img ./
-		7za a -tzip -mx=7 vendor.zip *.img
-		send_zip=$(up vendor.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-		$send_zip"
-		fi
-esac
+if [ -e out/target/product/*/*2022*.zip ]; then
+  send_zip=$(up out/target/product/*/*2022*.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+  $send_zip"
+fi
 
 ccache -s # Let's print ccache statistics finally
