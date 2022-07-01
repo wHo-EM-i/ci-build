@@ -7,7 +7,7 @@ tg () {
 	curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
 }
 
-tg "Build started! 
+tg "Build started!
 https://cirrus-ci.com/build/$CIRRUS_BUILD_ID"
 SECONDS=0
 
@@ -16,10 +16,10 @@ git config --global user.name "wHoEMi"
 git config --global user.email "ehteshammalik18998@gmail.com"
 
 # Repo init command, that -device,-mips,-darwin,-notdefault part will save you more time and storage to sync, add more according to your rom and choice. Optimization is welcomed! Let's make it quit, and with depth=1 so that no unnecessary things.
-repo init --depth=1 --no-repo-verify -u https://github.com/AOSPA/manifest -b sapphire -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/AtomXCLO/android_manifest -b sc-v2 -g default,-mips,-darwin,-notdefault
 
 # Local manifest
-git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b sapphire .repo/local_manifests
+git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b atomx .repo/local_manifests
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)

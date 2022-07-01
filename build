@@ -3,7 +3,7 @@ cd /tmp/rom
 
 # Normal build steps
 . build/envsetup.sh
-lunch aospa_lavender-user
+lunch atomx_lavender-user
 export TZ=Asia/Kolkata
 #export SELINUX_IGNORE_NEVERALLOWS=true
 export _JAVA_OPTIONS="-Xmx12g"
@@ -48,16 +48,16 @@ case "$1" in
 	full)
 		tg "Building ROM...!"
 		SECONDS=0
-		./rom-build.sh lavender -t user -v beta
+		./rom-build.sh lavender -t user
     if [ ! -e out/target/product/*/*2022*.zip ]; then # you don't have to run this if you're not facing oom kill issue while build is about 98-98%
-		./rom-build.sh lavender -t user -v beta # re-run the build cuz there's still time left considering only few targets left
+		./rom-build.sh lavender -t user # re-run the build cuz there's still time left considering only few targets left
     fi
 	;;
 	system)
 		tg "Building system.img to collect some ccache!"
 		SECONDS=0
 		make systemimage -j$(nproc --all) &
-		sleep 85m
+		sleep 95m
 		tg "Stopping system.img & preparing for ccache upload!"
 		kill %1
 	;;
