@@ -35,7 +35,7 @@ case "$2" in
 		 gh release create $rom --generate-notes --repo $repo_link # create a release tag
 		 up () {
 			gh release upload --clobber $rom $1 --repo $repo_link
-			echo "Link: $repo_link/releases/tag/$rom"
+			echo "Link: $repo_link/releases/download/$rom/$1"
 			}
 esac
 
@@ -68,8 +68,9 @@ case "$1" in
 esac
 
 # Upload rom zip file if succeed to build! Send notification to tg! And send shell to tg if build fails!
-if [ -e out/target/product/*/*2022*.zip ]; then
-  send_zip=$(up out/target/product/*/*2022*.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+cd out/target/product/$(grep unch build -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)/
+if [ -e *2022*.zip ]; then
+  send_zip=$(up *2022*.zip) && tg "Build Succeed! Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
   $send_zip"
 fi
 
