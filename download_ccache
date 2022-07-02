@@ -13,7 +13,7 @@ cd /tmp # Where to download cccahe
 echo "|| Downloading CCACHE ||"
 time wget https://polished-disk-a3d6.shubhamxd.workers.dev/0:/atomx_ccache_backup.zip.001
 time wget https://polished-disk-a3d6.shubhamxd.workers.dev/0:/atomx_ccache_backup.zip.002
-#time wget https://polished-disk-a3d6.shubhamxd.workers.dev/0:/atomx_ccache_backup.zip.003
+time wget https://polished-disk-a3d6.shubhamxd.workers.dev/0:/atomx_ccache_backup.zip.003
 
 # Extract ccache so ci can use it
 echo "|| Extracting CCACHE ||"
