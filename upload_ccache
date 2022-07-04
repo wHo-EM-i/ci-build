@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd /tmp/ccache
+. /tmp/ci/function
 
 echo "|| Uploading CCACHE ||"
 git add -f -A .

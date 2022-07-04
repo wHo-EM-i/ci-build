@@ -2,6 +2,7 @@
 
 mkdir -p /tmp/rom # Where to sync source
 cd /tmp/rom
+. /tmp/ci/function
 
 # Sync source
 repo init --depth=1 --no-repo-verify -u https://github.com/NusantaraProject-ROM/android_manifest -b 10 -g default,-mips,-darwin,-notdefault

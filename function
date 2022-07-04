@@ -1,0 +1,5 @@
+# Lets store all our function at one place
+
+# set your gmail and email
+git config --global user.email "$gmail"
+git config --global user.name "$CIRRUS_REPO_OWNER"

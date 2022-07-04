@@ -1,5 +1,6 @@
 #!/bin/bash
 cd /tmp/rom # Depends on where source got synced
+. /tmp/ci/function
 
 # Normal build steps
 . build/envsetup.sh

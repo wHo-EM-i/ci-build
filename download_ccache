@@ -3,6 +3,8 @@
 df -h
 free -h
 
+. /tmp/ci/function
+
 apt install git
 
 cd /tmp # Where to download cccahe

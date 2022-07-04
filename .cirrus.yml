@@ -2,6 +2,9 @@ env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
 
+# store information about git here
+    gmail: xyz@gmail.com
+
 task:
     name: aosp
     timeout_in: 260m
