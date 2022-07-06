@@ -4,6 +4,9 @@
 git config --global user.email "$gmail"
 git config --global user.name "$CIRRUS_REPO_OWNER"
 
+# lets store some variables
+github_repo="https://$CIRRUS_REPO_OWNER:$github_token@github.com/$CIRRUS_REPO_FULL_NAME"
+progress=https://cirrus-ci.com/build/$CIRRUS_BUILD_ID
 device_codename=$(grep unch /tmp/ci/build.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)
 rom_name=$(grep init /tmp/ci/sync -m 1 | cut -d / -f 4)
 upload_link=https://github.com/$CIRRUS_REPO_FULL_NAME
