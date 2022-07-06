@@ -10,3 +10,8 @@ device_codename=$(grep unch /tmp/ci/build.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -
 com () {
 tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
 }
+
+# install apt
+install_apt () {
+apt update && apt install wget pigz gh jq
+}

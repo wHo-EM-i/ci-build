@@ -5,7 +5,7 @@ free -h
 
 . /tmp/ci/function
 
-apt install git pigz
+install_apt
 
 cd /tmp # Where to download cccahe
 
