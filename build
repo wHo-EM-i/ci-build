@@ -4,7 +4,7 @@ cd /tmp/rom # Depends on where source got synced
 
 # Normal build steps
 . build/envsetup.sh
-lunch rom_lavender-userdebug
+lunch $lunch_device
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
@@ -33,7 +33,7 @@ case "$build_type" in
 		 kill %1
 		 ;;
 		 R|r) # Lets Make Full Rom
-		 make bacon -j$(nproc --all)
+		 bash /tmp/ci/build.sh
 esac
 
 if [ -e out/target/product/$device_codename/system.img ]; then
