@@ -12,9 +12,13 @@ ccache -M 15G
 ccache -o compression=true
 ccache -z
 
+# check how much time sync took
+sync_time
+sleeps=$((115 - $sync_time))m
+
 # compile plox
 make bacon -j$(nproc --all) &
-sleep 90m
+sleep $sleeps
 kill %1
 tg "Stop Compiling Rom To Collect Cache
 Status: $progress"
