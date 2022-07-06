@@ -6,6 +6,8 @@ cd /tmp
 # disable ccache upload if rom compilation was successful
 if [ ! -e /tmp/rom/out/target/product/$device_codename/*$device_codename*2022*zip ]; then
 
+SECONDS=0
+
 # compress in with pigz in a single zip.
 com ccache 1 # Compression level 1, its enough
 
@@ -16,11 +18,16 @@ cd /tmp/$rom_name
 git add -f -A .
 git commit -sm "CCACHE: IMPORT CCACHE FROM NEW BUILD"
 git push -f
+tg "Cache was Uploaded Successfully!
+Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
+Status: $progress"
 
 # lets compile again as rom isn't ready yet
 git clone -b $CIRRUS_BRANCH $github_repo $rom_name && cd $rom_name
 git commit -sm "SH*T, HERE WE GO AGAIN" --allow-empty
 git push -f
+tg "Started New Build as Rom isn't Compiled
+Status: https://cirrus-ci.com/"
 
 else
 

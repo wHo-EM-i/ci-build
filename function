@@ -34,3 +34,8 @@ gh release create $rom_name --generate-notes --repo $upload_link
 gh release upload --clobber $rom_name $1 --repo $upload_link
 echo "Link: $upload_link/releases/download/$rom_name/$1"
 }
+
+# push to telegram
+tg () {
+curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=$1&chat_id=${chat_id}"
+}
