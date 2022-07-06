@@ -20,3 +20,5 @@ git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender
 tg "Cloned all Sources Successfully!
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
 Status: $progress"
+
+echo "$(($SECONDS / 60))" > /tmp/sync_time.txt
