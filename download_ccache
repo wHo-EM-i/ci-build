@@ -18,12 +18,10 @@ Status: $progress"
 Type : $build_type | Status: $progress"
 esac
 
-SECONDS=0
-
 cd /tmp # Where to download cccahe
 
 echo "• Downloading CCACHE •"
-time wget https://nexusproject.ehteshammalik4.workers.dev/0:/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/ccache.tar.gz || time wget https://nexusproject.ehteshammalik4.workers.dev/0:/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/ccache.tar.gz
+down https://nexusproject.ehteshammalik4.workers.dev/0:/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/ccache.tar.gz || down https://nexusproject.ehteshammalik4.workers.dev/0:/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/ccache.tar.gz
 if [ -e *.tar.gz ]; then
 tg "Cache was Downloaded Successfully!
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).

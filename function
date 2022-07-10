@@ -22,14 +22,20 @@ install_apt () {
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-apt update && apt install wget pigz gh jq
-wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup || wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup
+apt update && apt install -y wget pigz gh jq aria2
+down https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup || wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup
 chmod 0775 gclone_setup && ./gclone_setup
 }
 
 # login in github before uploading
 echo $github_token > mytoken.txt # login in github
 gh auth login --with-token < mytoken.txt
+
+# download ccache
+down () {
+SECONDS=0
+time aria2c $1 -x16 -s50
+}
 
 # upload our rom zip
 upload () {
