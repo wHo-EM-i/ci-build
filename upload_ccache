@@ -7,7 +7,7 @@ cd /tmp
 if [ ! -e /tmp/rom/out/target/product/$device_codename/*$device_codename*2022*zip ]; then
 
 # compress in with pigz in a single zip.
-com ccache 1 # Compression level 1, its enough
+com ccache 0
 
 echo "• Uploading Cache On Gdrive •"
 upload_ccache ccache.tar.gz
