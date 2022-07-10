@@ -10,6 +10,7 @@ progress=https://cirrus-ci.com/build/$CIRRUS_BUILD_ID
 device_codename=$(grep unch /tmp/ci/build.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)
 rom_name=$(grep init /tmp/ci/sync -m 1 | cut -d / -f 4)
 lunch_device=$(grep lunch /tmp/ci/build.sh -m 1 | cut -d ' ' -f 2)
+branch_name=$(grep init /tmp/ci/sync | awk -F "-b " '{print $2}' | awk '{print $1}')
 
 # Compress function with pigz for faster compression
 com () {
@@ -22,6 +23,8 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of
 chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 apt update && apt install wget pigz gh jq
+wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup
+chmod 0775 gclone_setup && ./gclone_setup
 }
 
 # login in github before uploading
@@ -34,6 +37,13 @@ upload_link=$CIRRUS_REPO_CLONE_URL
 gh release create $rom_name --generate-notes --repo $upload_link
 gh release upload --clobber $rom_name $1 --repo $upload_link
 echo "Link: $upload_link/releases/download/$rom_name/$1"
+}
+
+# upload our ccache
+upload_ccache () {
+SECONDS=0
+gclone copy $1 whoemi:$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name -P
+url=https://emy.ehteshammalik4.workers.dev/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/$1
 }
 
 # push to telegram
