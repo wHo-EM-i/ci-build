@@ -5,7 +5,10 @@ cd /tmp/rom # Depends on where source got synced
 # Normal build steps
 . build/envsetup.sh
 lunch $lunch_device
-export _JAVA_OPTIONS="-Xmx10g"
+case "$build_type" in
+		 R|r)
+		 export _JAVA_OPTIONS="-Xmx10g"
+esac
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
