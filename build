@@ -37,7 +37,10 @@ case "$build_type" in
 		 kill %1
 		 ;;
 		 R|r) # Lets Make Full Rom
-		 bash /tmp/ci/build.sh
+		 bash /tmp/ci/build.sh || bash /tmp/ci/build.sh
+		 if [ -e out/target/product/$device_codename/*$device_codename*2022*zip ]; then # to bypass OOM kill
+		 bash /tmp/ci/build.sh || bash /tmp/ci/build.sh # simply re-run the build
+		 fi
 esac
 
 if [ -e out/target/product/$device_codename/system.img ]; then
