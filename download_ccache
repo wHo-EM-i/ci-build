@@ -41,3 +41,22 @@ rm -rf *.tar.gz
 
 # fix
 echo "" > /etc/mtab
+
+# Start new build if system img compiled
+case "$build_type" in
+		 S|s)
+		 echo "• build Type is System | Started loop•"
+		 sleep 80m # start loop after 80mins
+		 ;; # else
+		 *) # skip the script
+		 echo "• Build Type is not System | Skipped Script •"
+		 exit 1
+esac
+while true; do
+if [ -e /tmp/rom/out/target/product/$device_codename/system.img ]; then
+echo "R" > /tmp/build_type.txt
+bash /tmp/ci/upload_ccache
+else
+sleep 5m
+fi
+done&
