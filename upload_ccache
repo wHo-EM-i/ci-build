@@ -22,6 +22,16 @@ git clone -b $CIRRUS_BRANCH $github_repo $rom_name && cd $rom_name
 git commit -sm "SH*T, HERE WE GO AGAIN" --allow-empty
 git push -f
 
+else
+
+# drop empty commits
+git clone -b $CIRRUS_BRANCH $github_repo $rom_name && cd $rom_name
+git filter-branch --commit-filter 'git_commit_non_empty_tree "$@"' -f HEAD
+git commit -sm "ci: droping prev empty commits [skip ci]" -m "* now you can have successfull on just one commit
+* make sure to put R letter at the end of commit messages
+* lik git commit -m your_msg R" --allow-empty
+git push -f
+
 fi
 
 # clean storage
