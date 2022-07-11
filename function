@@ -23,7 +23,7 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of
 chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 apt update && apt install wget pigz gh jq
-wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup
+wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup || wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup
 chmod 0775 gclone_setup && ./gclone_setup
 }
 
