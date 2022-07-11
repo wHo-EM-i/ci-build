@@ -37,7 +37,10 @@ case "$build_type" in
 		 kill %1
 		 ;;
 		 R|r) # Lets Make Full Rom
-		 bash /tmp/ci/build.sh
+		 bash /tmp/ci/build.sh; ls out/target/product/$device_codename/*2022*.zip || sed -i 's/-j$(nproc --all)/-j7/' /tmp/ci/build.sh && bash /tmp/ci/build.sh
+		 if [ ! -e out/target/product/*/*2022*.zip ]; then # to bypass OOM kill
+		 sed -i 's/-j$(nproc --all)/-j6/' /tmp/ci/build.sh && bash /tmp/ci/build.sh # simply re-run the build with less threads
+		 fi
 esac
 
 if [ -e out/target/product/$device_codename/system.img ]; then
