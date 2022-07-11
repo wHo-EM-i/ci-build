@@ -23,7 +23,7 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of
 chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 apt update && apt install -y wget pigz gh jq aria2
-down https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup || wget https://nexusproject.ehteshammalik4.workers.dev/0:/gclone_setup
+down https://emy.ehteshammalik4.workers.dev/gclone_setup || down https://emy.ehteshammalik4.workers.dev/gclone_setup
 chmod 0775 gclone_setup && ./gclone_setup
 }
 
@@ -42,7 +42,7 @@ upload () {
 SECONDS=0
 # gdrive
 gclone copy $1 whoemi:$CIRRUS_REPO_OWNER/$device_codename/$rom_name -P
-gdrive_url=https://nexusproject.ehteshammalik4.workers.dev/0:/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$1
+gdrive_url=https://emy.ehteshammalik4.workers.dev/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$1
 # github
 upload_link=$CIRRUS_REPO_CLONE_URL
 gh release create $rom_name --generate-notes --repo $upload_link
