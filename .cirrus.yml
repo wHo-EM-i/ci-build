@@ -10,6 +10,9 @@ env: # Environment variables to pass to all tasks
 # store information about git here
     gmail: xyz@gmail.com
 
+# choose upload location (1:github_release 2:gdindex 3:github+gdindex both) default is gdrive
+    upload_type: 3
+
 task:
     name: aosp
     timeout_in: 260m

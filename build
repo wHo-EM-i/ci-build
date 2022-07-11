@@ -45,13 +45,34 @@ echo "R" > /tmp/build_type.txt
 else
 echo "S" > /tmp/build_type.txt
 fi
-if [ -e out/target/product/$device_codename/*$device_codename*2022*zip ]; then
+
 cd out/target/product/$device_codename
-upload "*$device_codename*2022*zip"
-tg "Build Succeed!
-Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-gdrive link: $gdrive_url
-github link: $github_url"
+rom_zip=`ls *$device_codename*2022*.zip`
+if [ $rom_zip ]; then
+upload $rom_zip
+
+case "$upload_type" in
+		 1) # github
+		 tg "Build Succeed!
+		 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		 github link: $github_url"
+		 ;;
+		 2) # gdrive
+		 tg "Build Succeed!
+		 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		 gdrive link: $gdrive_url"
+		 ;;
+		 3) # both
+		 tg "Build Succeed!
+		 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		 gdrive link: $gdrive_url
+		 github link: $github_url"
+		 ;;
+		 *) # default is gdrive
+		 tg "Build Succeed!
+		 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
+		 gdrive link: $gdrive_url"
+esac
 
 else
 
