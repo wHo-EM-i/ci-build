@@ -8,8 +8,15 @@ free -h
 install_apt
 
 check_build_type
-tg "Build Started! | Type : $build_type
+case "$build_type" in
+		 V)
+		 tg "Build Started! | Type : $build_type
 Status: $progress"
+		 ;; # else
+		 *)
+		 tg "Started New Build as Rom isn't Compiled
+Type : $build_type | Status: $progress"
+esac
 
 SECONDS=0
 
