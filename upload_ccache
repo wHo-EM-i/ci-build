@@ -3,6 +3,9 @@
 cd /tmp
 . /tmp/ci/function
 
+# Abort if already executed
+if [ ! -e /tmp/abort.txt ]; then
+
 # disable ccache upload if rom compilation was successful
 if [ ! -e /tmp/rom/out/target/product/$device_codename/*$device_codename*2022*zip ]; then
 
@@ -35,5 +38,10 @@ git push -f
 
 fi
 
-# clean storage
-rm -rf /tmp/*
+echo "dont upload cache again" > /tmp/abort.txt
+
+fi
+
+# clean storage except ci files
+rm -rf /tmp/rom 
+rm -rf /tmp/cache
