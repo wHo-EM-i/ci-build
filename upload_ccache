@@ -22,9 +22,12 @@ tg "Cache was Uploaded Successfully!
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
 Status: $progress"
 
+# update build type for next build
+build_type="`cat /tmp/build_type.txt`"
+
 # lets compile again as rom isn't ready yet
 git clone -b $CIRRUS_BRANCH $github_repo $rom_name && cd $rom_name
-git commit -sm "SH*T, HERE WE GO AGAIN" --allow-empty
+git commit -sm "SH*T, HERE WE GO AGAIN | $build_type" --allow-empty
 git push -f
 tg "Started New Build as Rom isn't Compiled
 Status: https://cirrus-ci.com/"
