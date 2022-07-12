@@ -26,13 +26,13 @@ case "$build_type" in
 		 make vendorimage -j$(nproc --all)
 		 vendor_time=$(($SECONDS / 60))
 		 sleeps=$((113 - ($vendor_time + $sync_time)))m
-		 make systemimage -j$(nproc --all) &
+		 make systemimage -j$(nproc --all) | tee build.log &
 		 sleep $sleeps
 		 kill %1
 		 ;;
 		 S|s) # Lets Make System
 		 sleeps=$((113 - $sync_time))m
-		 make systemimage -j$(nproc --all) &
+		 make systemimage -j$(nproc --all) | tee build.log &
 		 sleep $sleeps
 		 kill %1
 		 ;;

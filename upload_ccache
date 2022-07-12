@@ -23,7 +23,11 @@ build_type="`cat /tmp/build_type.txt`"
 
 # lets compile again as rom isn't ready yet
 git clone -b $CIRRUS_BRANCH $github_repo $rom_name && cd $rom_name
+if [ -e /tmp/rom/build.log ] && [ $(tail -n 50 /tmp/rom/build.log | grep -o -e ' 99% ' -e ' 98% ' -e ' 97% ' -e ' 96% ' -e ' 95% ' -e ' 94% ' -e ' 93% '-e ' 92% ' -e ' 91% '-e ' 90% ' -e ' 89% '-e ' 88% ' -e ' 87% '-e ' 86% ' -e ' 85% '-e ' 84% ' | head -n 1) ]; then
+git commit -sm "SH*T, HERE WE GO AGAIN | R" --allow-empty
+else
 git commit -sm "SH*T, HERE WE GO AGAIN | $build_type" --allow-empty
+fi
 git push -f
 
 fi
