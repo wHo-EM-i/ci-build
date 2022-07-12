@@ -25,13 +25,13 @@ case "$build_type" in
 		 SECONDS=0
 		 make vendorimage -j$(nproc --all)
 		 vendor_time=$(($SECONDS / 60))
-		 sleeps=$((115 - ($vendor_time + $sync_time)))m
+		 sleeps=$((113 - ($vendor_time + $sync_time)))m
 		 make systemimage -j$(nproc --all) &
 		 sleep $sleeps
 		 kill %1
 		 ;;
 		 S|s) # Lets Make System
-		 sleeps=$((115 - $sync_time))m
+		 sleeps=$((113 - $sync_time))m
 		 make systemimage -j$(nproc --all) &
 		 sleep $sleeps
 		 kill %1
