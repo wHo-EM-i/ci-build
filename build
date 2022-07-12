@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /tmp/rom # Depends on where source got synced
-. /tmp/ci/function
+. /tmp/ci/function && check_build_type
 
 # Normal build steps
 . build/envsetup.sh
@@ -14,20 +14,43 @@ ccache -z
 
 # check how much time sync took
 sync_time
-sleeps=$((115 - $sync_time))m
 
 # compile plox
-make bacon -j$(nproc --all) &
-sleep $sleeps
-kill %1
-tg "Stop Compiling Rom To Collect Cache
-Status: $progress"
+case "$build_type" in
+		 V|v) # Lets Make Vendor / System
+		 SECONDS=0
+		 make vendorimage -j$(nproc --all)
+		 vendor_time=$(($SECONDS / 60))
+		 sleeps=$((115 - ($vendor_time + $sync_time)))m
+		 make systemimage -j$(nproc --all) &
+		 sleep $sleeps
+		 kill %1
+		 ;;
+		 S|s) # Lets Make System
+		 sleeps=$((115 - $sync_time))m
+		 make systemimage -j$(nproc --all) &
+		 sleep $sleeps
+		 kill %1
+		 ;;
+		 R|r) # Lets Make Full Rom
+		 make bacon -j$(nproc --all)
+esac
 
+if [ -e out/target/product/$device_codename/system.img ]; then
+echo "R" > /tmp/build_type.txt
+else
+echo "S" > /tmp/build_type.txt
+fi
 if [ -e out/target/product/$device_codename/*$device_codename*2022*zip ]; then
 cd out/target/product/$device_codename
 send_zip=$(upload "*$device_codename*2022*zip")
 tg "Build Succeed!
 $send_zip"
+
+else
+
+tg "Stop Compiling $build_type To Collect Cache
+Status: $progress"
 
 fi
 

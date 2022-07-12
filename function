@@ -45,3 +45,20 @@ sync_time () {
 sync_time="`cat /tmp/sync_time.txt`"
 rm -rf sync_time.txt
 }
+
+# check Build Number
+check_build_type () {
+last_dir=${PWD}
+cd /tmp/ci
+git show -s --format=%s | awk 'NF>1{print $NF}' > /tmp/last_value.txt # store last value from commit name
+last_value="`cat /tmp/last_value.txt`" # store last value
+case "$last_value" in
+		 S|s|R|r)
+		 build_type=$last_value
+		 ;;
+		 *) # Lets make vendor as haven't stored any value in commit name
+		 build_type=V
+esac
+cd $last_dir
+rm -rf /tmp/last_* # clean up xD
+}
