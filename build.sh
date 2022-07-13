@@ -1,10 +1,10 @@
 # Normal build steps
 . build/envsetup.sh
-lunch rom_lavender-userdebug
+lunch aospa_lavender-user
 
 # export variable here
 export TZ=Asia/Kolkata
 
 compile_plox () {
-make bacon -j$(nproc --all)
+./rom-build.sh lavender -t user -v beta -j$(nproc --all)
 }
