@@ -11,10 +11,13 @@ check_build_type
 case "$build_type" in
 		 V)
 		 tg "Build Started! | Type : $build_type
+Rom: $rom_name
+Branch: $branch_name
+Device: $device_codename
 Status: $progress"
 		 ;; # else
 		 *)
-		 tg "Started New Build as Rom isn't Compiled
+		 tg "Started New Build as $rom_name isn't Compiled yet..!
 Type : $build_type | Status: $progress"
 esac
 
