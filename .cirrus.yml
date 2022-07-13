@@ -10,9 +10,6 @@ env: # Environment variables to pass to all tasks
 # store information about git here
     gmail: ehteshammalik18998@gmail.com
 
-# choose upload location (1:github_release 2:gdindex 3:github+gdindex both) default is gdrive
-    upload_type: 3
-
 task:
     name: aosp
     timeout_in: 260m
@@ -21,10 +18,14 @@ task:
       cpu: 8
       memory: 32G
     download_ccache_background_script: # To download ccache in background
-      - bash download_ccache # Ccache download script
+      - curl -o /tmp/ci/function https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/function
+      - curl -o /tmp/ci/download_ccache https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/download_ccache
+      - bash download_ccache
     sync_script:
       - bash sync
     build_script:
+      - curl -o build https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/build
       - bash build
     upload_ccache_script: # Upload ccache to cloud foreground
-      - bash upload_ccache # Ccache uploading script
+      - curl -o upload_ccache https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/upload_ccache
+      - bash upload_ccache
