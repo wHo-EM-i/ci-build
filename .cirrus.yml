@@ -3,12 +3,12 @@ env: # Environment variables to pass to all tasks
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
 
 # store our secrets here
-    github_token: "ENCRYPTED[!82ee7e07446c86fe97dda507543443a525fec83e693679c8f84d740764987310d74262013f45a1e5a56cc54e334e8f7c!]"
-    bot_api: "ENCRYPTED[!10482e25ca82cf0efa74e4c474a9e5cb82c1b2e5545657dd1917cba34aa08ce880b37bef99a47d0a49c4bb48523144b9!]"
-    chat_id: "ENCRYPTED[!c519abe30864df229179faa4e1eeaa0fde992d896ed620d45cb1f2ca25f0ee3b9373d08fb64a737c8759ae592ef9351c!]"
+    github_token: "ENCRYPTED[b9455bd3688144a717e82c52d90608feb44db92bd1ad6675072685da57663b03f537e1f798e4dec1a1f46d0bea9064a3]"
+    bot_api: "ENCRYPTED[203cc642df3a41c42a5477fa3569a9a45b8bd4a5720dfa717e29d5e01127dc69799c5a2c74270c0f9c8d1109c4143222]"
+    chat_id: "ENCRYPTED[73b4d3a4d0f6c12ba795457d76601753486b73b24a4094a0ddc6276567b1623dccd9d391e559c70f861c7c60a09af9ed]"
 
 # store information about git here
-    gmail: xyz@gmail.com
+    gmail: ehteshammalik18998@gmail.com
 
 # choose upload location (1:github_release 2:gdindex 3:github+gdindex both) default is gdrive
     upload_type: 3

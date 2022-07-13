@@ -7,15 +7,16 @@ cd /tmp/rom
 SECONDS=0
 
 # Sync source
-repo init --depth=1 --no-repo-verify -u https://github.com/ROM/android_manifest -b 10 -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/AOSPA/manifest -b sapphire -g default,-mips,-darwin,-notdefault
+git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b sapphire .repo/local_manifests
 
 # Sync source without unnecessary messages, try with -j30 first, if fails, it will try again
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 # local manifest
-git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b x device/xiaomi/lavender
-git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/vendor_xiaomi_lavender -b x vendor/xiaomi/lavender
-git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender -b x kernel/xiaomi/lavender
+#git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b hmp device/xiaomi/lavender
+#git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/vendor_xiaomi_lavender -b hmp vendor/xiaomi/lavender
+#git clone --depth=1 https://$CIRRUS_REPO_OWNER:$github_token@github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender -b eas kernel/xiaomi/lavender
 
 tg "Cloned all Sources Successfully!
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
