@@ -5,6 +5,7 @@ cd /tmp/rom # Depends on where source got synced
 # Normal build steps
 . build/envsetup.sh
 lunch $lunch_device
+cat /tmp/ci/extras.sh | bash
 case "$build_type" in
 		 R|r)
 		 export _JAVA_OPTIONS="-Xmx10g"
