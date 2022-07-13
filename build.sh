@@ -2,5 +2,6 @@
 
 # Normal build steps
 . build/envsetup.sh
-lunch rom_lavender-userdebug
-make bacon -j$(nproc --all)
+lunch aospa_lavender-user
+export TZ=Asia/Kolkata
+./rom-build.sh lavender -t user -v beta -j$(nproc --all)
