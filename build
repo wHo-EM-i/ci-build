@@ -60,8 +60,11 @@ ls *2022*zip && upload *2022*zip
 
 if [ ! -e /tmp/rom/out/target/product/*/*2022*.zip ]; then
 
+# don't send this again if bg loop already done this when it was stuck in sleep
+if [ ! -e /tmp/abort.txt ]; then
 tg "Stop Compiling $build_type To Collect Cache
 Status: $progress"
+fi
 
 fi
 
