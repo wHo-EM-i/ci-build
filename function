@@ -46,15 +46,19 @@ case "$upload_type" in
 		 gh release upload --clobber $rom_name $1 --repo $upload_link
 		 github_url=$upload_link/releases/download/$rom_name/$1
 		 tg "Build Succeed!
+Filename: $1
+Zip Size: $(ls -sh ${PWD}/$1 | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-github link: $github_url"
+Github link: $github_url"
 		 ;;
 		 2) # gdrive
 		 gclone copy $1 whoemi:$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name -P
 		 gdrive_url=https://emy.ehteshammalik4.workers.dev/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/$1
 		 tg "Build Succeed!
+Filename: $1
+Zip Size: $(ls -sh ${PWD}/$1 | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-gdrive link: $gdrive_url"
+Gdrive link: $gdrive_url"
 		 ;;
 		 3) # both
 		 gclone copy $1 whoemi:$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name -P
@@ -63,16 +67,20 @@ gdrive link: $gdrive_url"
 		 github_url=$upload_link/releases/download/$rom_name/$1
 		 gdrive_url=https://emy.ehteshammalik4.workers.dev/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/$1
 		 tg "Build Succeed!
+Filename: $1
+Zip Size: $(ls -sh ${PWD}/$1 | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-gdrive link: $gdrive_url
-github link: $github_url"
+Gdrive link: $gdrive_url
+Github link: $github_url"
 		 ;;
 		 *) # default is gdrive
 		 gclone copy $1 whoemi:$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name -P
 		 gdrive_url=https://emy.ehteshammalik4.workers.dev/$CIRRUS_REPO_OWNER/$device_codename/$rom_name/$branch_name/$1
 		 tg "Build Succeed!
+Filename: $1
+Zip Size: $(ls -sh ${PWD}/$1 | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60))min and $(($SECONDS % 60))sec.
-gdrive link: $gdrive_url"
+Gdrive link: $gdrive_url"
 esac
 }
 
@@ -80,7 +88,6 @@ esac
 upload_ccache () {
 SECONDS=0
 gclone copy $1 whoemi:$device_codename/$rom_name/$branch_name -P
-url=https://emy.ehteshammalik4.workers.dev/$device_codename/$rom_name/$branch_name/$1
 }
 
 # push to telegram

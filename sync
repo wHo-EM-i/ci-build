@@ -17,7 +17,8 @@ git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender
 git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/vendor_xiaomi_lavender -b x vendor/xiaomi/lavender
 git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender -b x kernel/xiaomi/lavender
 
-tg "Cloned all Sources Successfully!
+tg "$rom_name source sync completed!
+Total Size: $(du -sh /tmp/rom | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
 Status: $progress"
 
