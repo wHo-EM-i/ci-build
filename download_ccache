@@ -26,7 +26,8 @@ cd /tmp # Where to download cccahe
 echo "• Downloading CCACHE •"
 down https://emy.ehteshammalik4.workers.dev/$device_codename/$rom_name/$branch_name/ccache.tar.gz || down https://emy.ehteshammalik4.workers.dev/$device_codename/$rom_name/$branch_name/ccache.tar.gz
 if [ -e *.tar.gz ]; then
-tg "Cache was Downloaded Successfully!
+tg "$rom_name ccache downloaded successfully!
+Total Size: $(ls -sh ${PWD}/ccache.tar.gz | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
 Status: $progress"
 else

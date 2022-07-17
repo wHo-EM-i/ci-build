@@ -11,9 +11,10 @@ com ccache 0
 
 echo "• Uploading Cache On Gdrive •"
 upload_ccache ccache.tar.gz
-tg "Cache was Uploaded Successfully!
+tg "$rom_name ccache was uploaded successfully!
+Total Size: $(ls -sh ${PWD}/ccache.tar.gz | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
-Status: $progress | cache zip: $url"
+Status: $progress"
 
 rom_zip=`ls /tmp/rom/out/target/product/*/*.zip`
 if [ -z $rom_zip ]; then
