@@ -1,11 +1,12 @@
 #!/bin/bash
 cd /tmp/rom # Depends on where source got synced
+mv /tmp/ci/extras.sh /tmp/rom
 . /tmp/ci/function && check_build_type
 
 # Normal build steps
 . build/envsetup.sh
 lunch $lunch_device
-cat /tmp/ci/extras.sh | bash
+source extras.sh
 case "$build_type" in
 		 R|r)
 		 export _JAVA_OPTIONS="-Xmx10g"
