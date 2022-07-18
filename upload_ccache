@@ -16,6 +16,14 @@ Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
 Status: $progress | cache zip: $url"
 
 rom_zip=`ls /tmp/rom/out/target/product/*/*.zip`
+
+# abort auto trigger if build was failed instead of being completed or killed by us.
+if [ -e /tmp/abort_loop.txt ]; then
+rm -rf /tmp/rom
+rm -rf /tmp/cache
+exit 1
+fi
+
 if [ -z $rom_zip ]; then
 
 # update build type for next build
