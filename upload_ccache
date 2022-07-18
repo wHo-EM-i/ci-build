@@ -16,6 +16,20 @@ Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
 Status: $progress | cache zip: $url"
 
 rom_zip=`ls /tmp/rom/out/target/product/*/*.zip`
+
+# Abort auto trigger on R build aka full rom
+# if it fails then its going to start new S type build which make no sense
+if [ -z $rom_zip ]; then # just to make sure build was failed or OOM kill happend
+check_build_type
+case "$build_type" in
+		 R|r)
+     # clean storage
+     rm -rf /tmp/rom
+     rm -rf /tmp/cache
+     exit 1
+esac
+fi
+
 if [ -z $rom_zip ]; then
 
 # update build type for next build
