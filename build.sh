@@ -2,6 +2,7 @@
 
 # Normal build steps
 . build/envsetup.sh
-lunch rom_lavender-userdebug
-. extras.sh # export flags
+lunch superior_lavender-userdebug
+. extras.sh
+export TZ=Asia/Kolkata
 make bacon -j$(nproc --all)

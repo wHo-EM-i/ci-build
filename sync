@@ -7,15 +7,16 @@ cd /tmp/rom
 SECONDS=0
 
 # Sync source
-repo init --depth=1 --no-repo-verify -u https://github.com/ROM/android_manifest -b 10 -g default,-mips,-darwin,-notdefault
+repo init --depth=1 --no-repo-verify -u https://github.com/SuperiorOS/manifest -b twelvedotone -g default,-mips,-darwin,-notdefault
+git clone https://github.com/Prashant-1695/local_manifest.git --depth 1 -b superior .repo/local_manifests
 
 # Sync source without unnecessary messages, try with -j30 first, if fails, it will try again
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 # local manifest
-git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b x device/xiaomi/lavender
-git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/vendor_xiaomi_lavender -b x vendor/xiaomi/lavender
-git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender -b x kernel/xiaomi/lavender
+#git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b x device/xiaomi/lavender
+#git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/vendor_xiaomi_lavender -b x vendor/xiaomi/lavender
+#git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender -b x kernel/xiaomi/lavender
 
 tg "$rom_name source sync completed!
 Total Size: $(du -sh /tmp/rom | cut -d - -f 1 | cut -d / -f 1)
