@@ -3,6 +3,9 @@
 df -h
 free -h
 
+# start after sync script
+sleep 5
+
 . /tmp/ci/function
 
 install_apt
