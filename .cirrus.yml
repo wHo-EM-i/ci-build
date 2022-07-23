@@ -11,13 +11,13 @@ env: # Environment variables to pass to all tasks
     gmail: xyz@gmail.com
     
 # User Version ( dont touch )
-    user_version: 1 # lets start from 1
+    user_version: 2 # lets start from 1
 
 task:
     name: aosp
     timeout_in: 260m
     container:
-      image: aarunalr/aosp-build
+      dockerfile: Dockerfile
       cpu: 8
       memory: 32G
     download_ccache_background_script: # To download ccache in background
