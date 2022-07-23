@@ -12,7 +12,7 @@ rom_name=$(grep init /tmp/ci/sync -m 1 | cut -d / -f 4)
 upload_link=https://github.com/$CIRRUS_REPO_FULL_NAME
 branch_name=$(grep init /tmp/ci/sync | awk -F "-b " '{print $2}' | awk '{print $1}')
 upload_type=3
-latest_version=1
+latest_version=2
 
 # Compress function with pigz for faster compression
 com () {
