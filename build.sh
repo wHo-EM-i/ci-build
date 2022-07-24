@@ -1,10 +1,14 @@
 # Normal build steps
 . build/envsetup.sh
-lunch aospa_lavender-user
+lunch fluid_lavender-userdebug
 
 # export variable here
 export TZ=Asia/Kolkata
+export SELINUX_IGNORE_NEVERALLOWS=true
+export WITH_GAPPS=true
+export TARGET_INCLUDE_GAPPS=true
+export TARGET_GAPPS_ARCH=arm64
 
 compile_plox () {
-./rom-build.sh lavender -t user -v beta -j$(nproc --all)
+make bacon -j$(nproc --all)
 }
