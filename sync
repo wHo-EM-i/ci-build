@@ -14,6 +14,8 @@ git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b fuse .repo/local
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 # local manifest
+rm -rf device/qcom/sepolicy-legacy-um
+git clone --depth=1 https://github.com/Project-Fluid/device_qcom_sepolicy device/qcom/sepolicy-legacy-um -b fluid-12.1-legacy-um
 rm -rf device/xiaomi/lavender
 rm -rf kernel/xiaomi/lavender/Android.bp
 git clone --depth=1 https://$CIRRUS_REPO_OWNER:$github_token@github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b S device/xiaomi/lavender
