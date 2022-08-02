@@ -43,12 +43,12 @@ case "$build_type" in
 		 ;;
 		 R|r) # Lets Make Full Rom
 		 compile_plox | tee build.log
-		 if [ ! -e out/target/product/*/*2022*.zip ]; then # to bypass OOM kill
+		 if [ ! -e out/target/product/*/*.zip ]; then # to bypass OOM kill
 		 sed -i 's/-j$(nproc --all)/-j7/' /tmp/ci/build.sh
 		 . /tmp/ci/build.sh # run again to update values before starting compilation
 		 compile_plox # simply re-run the build with less threads
 		 fi
-		 if [ ! -e out/target/product/*/*2022*.zip ]; then
+		 if [ ! -e out/target/product/*/*.zip ]; then
 		 sed -i 's/-j7/-j6/' /tmp/ci/build.sh
 		 . /tmp/ci/build.sh
 		 compile_plox # just incase if -1 thread didnt help
@@ -65,9 +65,11 @@ echo "S" > /tmp/build_type.txt
 fi
 
 cd out/target/product/$device_codename/
-ls *2022*zip && upload *2022*zip
+ls *-eng*.zip && rm -rf *-eng*.zip
+ls *-ota-*.zip && rm -rf *-ota-*.zip
+ls *.zip && upload *.zip
 
-if [ ! -e /tmp/rom/out/target/product/*/*2022*.zip ]; then
+if [ ! -e /tmp/rom/out/target/product/*/*.zip ]; then
 
 # don't send this again if bg loop already done this when it was stuck in sleep
 if [ ! -e /tmp/abort.txt ]; then
