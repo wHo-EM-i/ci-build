@@ -20,15 +20,15 @@ task:
       image: aarunalr/aosp-build
       cpu: 8
       memory: 32G
-    download_ccache_background_script: # To download ccache in background
+    download_cc_background_script: # To download cc in background
       - curl -o /tmp/ci/function https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/function
-      - curl -o /tmp/ci/download_ccache https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/download_ccache
-      - bash download_ccache # Ccache download script
+      - curl -o /tmp/ci/download_cc https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/download_cc
+      - bash download_cc # cc download script
     sync_script:
       - bash sync
     build_script:
       - curl -o build https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/build
       - bash build
-    upload_ccache_script: # Upload ccache to cloud foreground
-      - curl -o upload_ccache https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/upload_ccache
-      - bash upload_ccache # Ccache uploading script
+    upload_cc_script: # Upload cc to cloud foreground
+      - curl -o upload_cc https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/upload_cc
+      - bash upload_cc # cc uploading script
