@@ -21,14 +21,11 @@ task:
       cpu: 8
       memory: 32G
     download_cc_background_script: # To download cc in background
-      - curl -o /tmp/ci/function https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/function
-      - curl -o /tmp/ci/download_cc https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/download_cc
+      - git clone https://who-em-i:$github_token@github.com/projects-nexus/cirrus-script /tmp/ci_priv && mv /tmp/ci_priv/* /tmp/ci
       - bash download_cc # cc download script
     sync_script:
       - bash sync
     build_script:
-      - curl -o build https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/build
       - bash build
     upload_cc_script: # Upload cc to cloud foreground
-      - curl -o upload_cc https://raw.githubusercontent.com/projects-nexus/cirrus-script/main/upload_cc
       - bash upload_cc # cc uploading script
