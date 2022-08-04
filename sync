@@ -14,10 +14,11 @@ git clone https://github.com/wHo-EM-i/manifest.git --depth 1 -b sapphire .repo/l
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 # local manifest
-#git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b hmp device/xiaomi/lavender
+git clone --depth=1 https://$CIRRUS_REPO_OWNER:$github_token@github.com/$CIRRUS_REPO_OWNER/device_xiaomi_lavender -b sapphire device/xiaomi/lavender
 #git clone --depth=1 https://github.com/$CIRRUS_REPO_OWNER/vendor_xiaomi_lavender -b hmp vendor/xiaomi/lavender
 #git clone --depth=1 https://$CIRRUS_REPO_OWNER:$github_token@github.com/$CIRRUS_REPO_OWNER/kernel_xiaomi_lavender -b eas kernel/xiaomi/lavender
 
+. /tmp/ci/function
 tg "$rom_name source sync completed!
 Total Size: $(du -sh /tmp/rom | cut -d - -f 1 | cut -d / -f 1)
 Time Took: $(($SECONDS / 60)) minute(s) and $(($SECONDS % 60)) second(s).
