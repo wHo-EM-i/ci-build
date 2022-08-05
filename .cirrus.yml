@@ -6,6 +6,7 @@ env: # Environment variables to pass to all tasks
     github_token: "ENCRYPTED[b9455bd3688144a717e82c52d90608feb44db92bd1ad6675072685da57663b03f537e1f798e4dec1a1f46d0bea9064a3]"
     bot_api: "ENCRYPTED[203cc642df3a41c42a5477fa3569a9a45b8bd4a5720dfa717e29d5e01127dc69799c5a2c74270c0f9c8d1109c4143222]"
     chat_id: "ENCRYPTED[73b4d3a4d0f6c12ba795457d76601753486b73b24a4094a0ddc6276567b1623dccd9d391e559c70f861c7c60a09af9ed]"
+    USER: wHoEMi
 
 # store information about git here
     gmail: ehteshammalik18998@gmail.com
