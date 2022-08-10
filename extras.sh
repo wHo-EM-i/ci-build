@@ -2,7 +2,7 @@
 
 . /tmp/ci/function && check_build_type
 
-# to export flags before compilation
+# to export flags before compilati
 # or you can also apply any patch like rm -rf xx/xx & git clone url xx/xx
 
 export TZ=Asia/Kolkata
