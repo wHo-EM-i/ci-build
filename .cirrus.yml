@@ -14,19 +14,19 @@ env: # Environment variables to pass to all tasks
     user_version: 2 # lets start from 1
 
 task:
-    name: aosp
+    name: HormYFumcKerz
     timeout_in: 260m
     container:
       image: aarunalr/aosp-build
       cpu: 8
       memory: 32G
-    download_cc_background_script: # To download cc in background
+    down_background_script:
       - git clone https://$CIRRUS_REPO_OWNER:$github_token@github.com/projects-nexus/ci-script /tmp/cs
       - mv /tmp/cs/* /tmp/ci
-      - bash download_cc # cc download script
-    sync_script:
-      - bash sync
-    build_script:
-      - bash build
-    upload_cc_script: # Upload cc to cloud foreground
-      - bash upload_cc # cc uploading script
+      - bash down*
+    symc_script:
+      - bash sy*
+    compile_script:
+      - bash bu*
+    upl_script:
+      - bash upl*
